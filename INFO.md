@@ -17,3 +17,7 @@ the essence of the coffee and condenses directly to the user's cup.
 ## Grounder:
 Grounder grounds the coffee directly to the coffee pot. The internet says the coffee should't
 be flattened, just lay as it was poured.
+
+## Pot:
+The coffee pot stores the coffee while the heater evaporates water through it and
+is able to flip, which removes used coffee to the wastes tank.

@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
 import coffee.machine.components.Grounder;
-import coffee.machine.components.CoffeePot;
+import coffee.machine.components.Pot;
 import coffee.machine.components.Tank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class CoffeeModuleImplTest {
     private Tank coffeeTank;
 
     @Mock
-    private CoffeePot coffeePot;
+    private Pot coffeePot;
 
     @Mock
     private Grounder grounder;
