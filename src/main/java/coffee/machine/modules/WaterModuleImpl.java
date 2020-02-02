@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
 import coffee.machine.pumps.Pump;
-import coffee.machine.tanks.WaterTank;
+import coffee.machine.tanks.Tank;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor(staticName = "of")
 @Log4j2
 public class WaterModuleImpl implements WaterModule {
-    private WaterTank waterTank;
+    private Tank waterTank;
     private Pump waterPump;
 
     @Override

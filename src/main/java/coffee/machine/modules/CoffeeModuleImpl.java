@@ -2,7 +2,7 @@ package coffee.machine.modules;
 
 import coffee.machine.grounders.Grounder;
 import coffee.machine.pots.CoffeePot;
-import coffee.machine.tanks.CoffeeTank;
+import coffee.machine.tanks.Tank;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor(staticName = "of")
 @Log4j2
 public class CoffeeModuleImpl implements CoffeeModule {
-    private CoffeeTank coffeeTank;
+    private Tank coffeeTank;
     private CoffeePot coffeePot;
     private Grounder grounder;
 

@@ -2,7 +2,7 @@ package coffee.machine.modules;
 
 import coffee.machine.grounders.Grounder;
 import coffee.machine.pots.CoffeePot;
-import coffee.machine.tanks.CoffeeTank;
+import coffee.machine.tanks.Tank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 class CoffeeModuleImplTest {
 
     @Mock
-    private CoffeeTank coffeeTank;
+    private Tank coffeeTank;
 
     @Mock
     private CoffeePot coffeePot;

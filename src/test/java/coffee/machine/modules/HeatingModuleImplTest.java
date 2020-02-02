@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
 import coffee.machine.heaters.Heater;
-import coffee.machine.tanks.WaterTank;
+import coffee.machine.tanks.Tank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 class HeatingModuleImplTest {
 
     @Mock
-    private WaterTank waterTank;
+    private Tank waterTank;
 
     @Mock
     private Heater heater;

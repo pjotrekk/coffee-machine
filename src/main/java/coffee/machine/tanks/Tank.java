@@ -1,6 +1,6 @@
 package coffee.machine.tanks;
 
-public interface WaterTank {
+public interface Tank {
     int amount();
     int maxCapacity();
 }
