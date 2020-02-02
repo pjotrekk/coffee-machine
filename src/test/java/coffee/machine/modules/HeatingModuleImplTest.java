@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.Container;
-import coffee.machine.components.Heater;
+import coffee.machine.components.containers.Container;
+import coffee.machine.components.heaters.Heater;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

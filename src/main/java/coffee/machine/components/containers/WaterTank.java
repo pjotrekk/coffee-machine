@@ -1,19 +1,20 @@
-package coffee.machine.components;
+package coffee.machine.components.containers;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @NoArgsConstructor(staticName = "create")
 @Log4j2
-public class CoffeeTank implements Tank {
+public class WaterTank implements Tank {
 
     @Override
     public int amount() {
-        return 200;
+        return 600;
     }
 
     @Override
     public int maxCapacity() {
-        return 500;
+        return 1500;
     }
+
 }

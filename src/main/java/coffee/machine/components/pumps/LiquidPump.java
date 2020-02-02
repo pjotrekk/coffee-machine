@@ -1,4 +1,4 @@
-package coffee.machine.components;
+package coffee.machine.components.pumps;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;

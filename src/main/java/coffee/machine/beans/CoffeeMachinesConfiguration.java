@@ -1,4 +1,4 @@
-package coffee.machine.configurations;
+package coffee.machine.beans;
 
 import coffee.machine.CoffeeMachine;
 import coffee.machine.modules.CoffeeModule;

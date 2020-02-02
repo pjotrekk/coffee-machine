@@ -1,6 +1,12 @@
-package coffee.machine.configurations;
+package coffee.machine.beans;
 
-import coffee.machine.components.*;
+import coffee.machine.components.containers.Container;
+import coffee.machine.components.containers.Tank;
+import coffee.machine.components.foamers.Foamer;
+import coffee.machine.components.grounders.Grounder;
+import coffee.machine.components.heaters.Heater;
+import coffee.machine.components.pots.Pot;
+import coffee.machine.components.pumps.Pump;
 import coffee.machine.modules.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

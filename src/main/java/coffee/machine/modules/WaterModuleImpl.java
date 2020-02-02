@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.Pump;
-import coffee.machine.components.Tank;
+import coffee.machine.components.pumps.Pump;
+import coffee.machine.components.containers.Tank;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

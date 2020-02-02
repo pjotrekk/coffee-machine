@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.Container;
-import coffee.machine.components.Heater;
+import coffee.machine.components.containers.Container;
+import coffee.machine.components.heaters.Heater;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
