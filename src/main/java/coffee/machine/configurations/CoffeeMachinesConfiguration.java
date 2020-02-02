@@ -18,11 +18,6 @@ public class CoffeeMachinesConfiguration {
             HeatingModule heatingModule,
             WastesModule wastesModule
     ) {
-        return CoffeeMachine.builder()
-                .waterModule(waterModule)
-                .coffeeModule(coffeeModule)
-                .heatingModule(heatingModule)
-                .wastesModule(wastesModule)
-                .build();
+        return CoffeeMachine.of(waterModule, coffeeModule, heatingModule, wastesModule);
     }
 }

@@ -30,12 +30,7 @@ class CoffeeMachineTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        coffeeMachine = CoffeeMachine.builder()
-                .waterModule(waterModule)
-                .coffeeModule(coffeeModule)
-                .heatingModule(heatingModule)
-                .wastesModule(wastesModule)
-                .build();
+        coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, heatingModule, wastesModule);
     }
 
     @Test
