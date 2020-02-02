@@ -18,7 +18,7 @@ public class CoffeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void makeCoffee(@RequestParam(name = "coffeeKind") CoffeeKind coffeeKind) {
-        log.info("Request for {} arrived", coffeeKind);
+        log.info("Request for {} arrived", coffeeKind.toString().toLowerCase());
         coffeeMachine.makeCoffee(coffeeKind);
     }
 
