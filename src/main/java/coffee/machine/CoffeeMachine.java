@@ -8,6 +8,7 @@ import lombok.Builder;
 
 @Builder
 class CoffeeMachine {
+
     private WaterModule waterModule;
     private CoffeeModule coffeeModule;
     private HeatingModule heatingModule;
@@ -18,9 +19,9 @@ class CoffeeMachine {
         int amountCoffee = coffeeKind.getCoffeeNeeded();
 
         waterModule.checkWaterTank(amountWater);
+        wastesModule.checkOverflow();
         heatingModule.checkCapacity(amountWater);
         coffeeModule.checkCapacity(amountCoffee);
-        wastesModule.checkOverflow();
         waterModule.moveWaterToHeater(amountWater);
         coffeeModule.ground(amountCoffee);
         heatingModule.heat(amountWater);
