@@ -7,7 +7,7 @@ import coffee.machine.modules.WaterModule;
 import lombok.Builder;
 
 @Builder
-class CoffeeMachine {
+public class CoffeeMachine {
 
     private WaterModule waterModule;
     private CoffeeModule coffeeModule;
