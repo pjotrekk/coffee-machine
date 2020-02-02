@@ -33,32 +33,35 @@ class MilkModuleImplTest {
 
     @Test
     void shouldCallHeaterToCheckCapacity() {
-        milkModule.checkMilkContainer(200);
+        int milkAmount = 200;
+        milkModule.checkMilkContainer(milkAmount);
 
-        verify(milkHeatingModule, times(1)).checkCapacity(200);
+        verify(milkHeatingModule, times(1)).checkCapacity(milkAmount);
         verifyNoMoreInteractions(milkHeatingModule);
         verifyNoInteractions(milkToHeaterPump, milkToCupPump);
     }
 
     @Test
     void shouldPrepareMilk() {
-        milkModule.prepareMilk(200);
+        int milkAmount = 200;
+        milkModule.prepareMilk(milkAmount);
 
-        verify(milkToHeaterPump, times(1)).pump(200);
-        verify(milkHeatingModule, times(1)).heat(200);
-        verify(milkToCupPump, times(1)).pump(200);
+        verify(milkToHeaterPump, times(1)).pump(milkAmount);
+        verify(milkHeatingModule, times(1)).heat(milkAmount);
+        verify(milkToCupPump, times(1)).pump(milkAmount);
         verifyNoMoreInteractions(milkToHeaterPump, milkHeatingModule, milkToCupPump);
         verifyNoInteractions(foamer);
     }
 
     @Test
     void shouldPrepareFoamedMilk() {
-        milkModule.prepareFoamedMilk(200);
+        int milkAmount = 200;
+        milkModule.prepareFoamedMilk(milkAmount);
 
-        verify(milkToHeaterPump, times(1)).pump(200);
-        verify(milkHeatingModule, times(1)).heat(200);
-        verify(foamer, times(1)).foam(200);
-        verify(milkToCupPump, times(1)).pump(200);
+        verify(milkToHeaterPump, times(1)).pump(milkAmount);
+        verify(milkHeatingModule, times(1)).heat(milkAmount);
+        verify(foamer, times(1)).foam(milkAmount);
+        verify(milkToCupPump, times(1)).pump(milkAmount);
         verifyNoMoreInteractions(milkToHeaterPump, milkHeatingModule, milkToCupPump, foamer);
     }
 

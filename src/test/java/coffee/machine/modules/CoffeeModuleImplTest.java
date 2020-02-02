@@ -35,7 +35,6 @@ class CoffeeModuleImplTest {
 
     @Test
     void shouldPassCapacityCheck() {
-
         int coffeeNeeded = 20;
         given(coffeeTank.amount()).willReturn(500);
 
@@ -65,9 +64,10 @@ class CoffeeModuleImplTest {
 
     @Test
     void testGround() {
-        coffeeModule.ground(20);
+        int coffeeAmount = 20;
+        coffeeModule.ground(coffeeAmount);
 
-        verify(grounder, times(1)).ground(20);
+        verify(grounder, times(1)).ground(coffeeAmount);
         verifyNoMoreInteractions(grounder);
         verifyNoInteractions(coffeePot, coffeeTank);
     }

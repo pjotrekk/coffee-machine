@@ -87,10 +87,11 @@ class WaterModuleImplTest {
 
     @Test
     void shouldMoveWaterToHeater() {
-        waterModule.prepareWater(200);
+        int waterAmount = 200;
+        waterModule.prepareWater(waterAmount);
 
-        verify(waterPump, times(1)).pump(200);
-        verify(waterHeatingModule, times(1)).heat(200);
+        verify(waterPump, times(1)).pump(waterAmount);
+        verify(waterHeatingModule, times(1)).heat(waterAmount);
         verifyNoMoreInteractions(waterPump, waterHeatingModule);
         verifyNoInteractions(waterTank);
     }
