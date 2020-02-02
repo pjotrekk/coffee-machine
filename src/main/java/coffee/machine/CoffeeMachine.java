@@ -48,20 +48,23 @@ public class CoffeeMachine {
     }
 
     void makeCoffee(CoffeeKind coffeeKind) {
+        checkContainers(coffeeKind);
         programs.get(coffeeKind).accept(coffeeKind);
     }
 
     private void makeBlackCoffee(CoffeeKind coffeeKind) {
-        int amountWater = coffeeKind.getWaterNeeded();
-        int amountCoffee = coffeeKind.getCoffeeNeeded();
+        int water = coffeeKind.getWaterNeeded();
+        int coffee = coffeeKind.getCoffeeNeeded();
 
-        waterModule.checkWaterTank(amountWater);
-        wastesModule.checkOverflow();
-        coffeeModule.checkCapacity(amountCoffee);
-        waterModule.moveWaterToHeater(amountWater);
-        coffeeModule.ground(amountCoffee);
-        waterModule.heatWater(amountWater);
+        coffeeModule.ground(coffee);
+        waterModule.prepareWater(water);
         coffeeModule.flipUsedCoffee();
+    }
+
+    private void checkContainers(CoffeeKind coffeeKind) {
+        wastesModule.checkOverflow();
+        waterModule.checkWaterTank(coffeeKind.getWaterNeeded());
+        coffeeModule.checkCapacity(coffeeKind.getCoffeeNeeded());
     }
 
 }

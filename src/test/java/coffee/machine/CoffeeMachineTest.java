@@ -42,9 +42,8 @@ class CoffeeMachineTest {
         verify(waterModule, times(1)).checkWaterTank(waterNeeded);
         verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
         verify(wastesModule, times(1)).checkOverflow();
-        verify(waterModule, times(1)).moveWaterToHeater(waterNeeded);
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).heatWater(waterNeeded);
+        verify(waterModule, times(1)).prepareWater(waterNeeded);
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule);
@@ -60,12 +59,12 @@ class CoffeeMachineTest {
         verify(waterModule, times(1)).checkWaterTank(waterNeeded);
         verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
         verify(wastesModule, times(1)).checkOverflow();
-        verify(waterModule, times(1)).moveWaterToHeater(waterNeeded);
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).heatWater(waterNeeded);
+        verify(waterModule, times(1)).prepareWater(waterNeeded);
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule);
         verifyNoInteractions(milkModule);
     }
+
 }

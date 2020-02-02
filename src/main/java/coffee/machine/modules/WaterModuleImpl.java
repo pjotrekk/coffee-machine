@@ -20,12 +20,16 @@ public class WaterModuleImpl implements WaterModule {
     }
 
     @Override
-    public void moveWaterToHeater(int amount) {
+    public void prepareWater(int amount) {
+        moveWaterToHeater(amount);
+        heatWater(amount);
+    }
+
+    private void moveWaterToHeater(int amount) {
         waterPump.pump(amount);
     }
 
-    @Override
-    public void heatWater(int amount) {
+    private void heatWater(int amount) {
         waterHeatingModule.heat(amount);
     }
 
