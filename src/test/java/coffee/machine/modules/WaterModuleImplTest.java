@@ -21,12 +21,15 @@ class WaterModuleImplTest {
     @Mock
     private Pump waterPump;
 
+    @Mock
+    private HeatingModule waterHeatingModule;
+
     private WaterModule waterModule;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        waterModule = WaterModuleImpl.of(waterTank, waterPump);
+        waterModule = WaterModuleImpl.of(waterTank, waterPump, waterHeatingModule);
     }
 
     @Test
@@ -39,6 +42,7 @@ class WaterModuleImplTest {
 
         verify(waterTank, times(2)).amount();
         verify(waterTank, times(1)).maxCapacity();
+        verify(waterHeatingModule, times(1)).checkCapacity(waterNeeded);
         verifyNoMoreInteractions(waterTank);
         verifyNoInteractions(waterPump);
     }
@@ -59,7 +63,7 @@ class WaterModuleImplTest {
         verify(waterTank, times(1)).amount();
         verify(waterTank, times(1)).maxCapacity();
         verifyNoMoreInteractions(waterTank);
-        verifyNoInteractions(waterPump);
+        verifyNoInteractions(waterPump, waterHeatingModule);
     }
 
     @Test
@@ -78,7 +82,7 @@ class WaterModuleImplTest {
         verify(waterTank, times(3)).amount();
         verify(waterTank, times(1)).maxCapacity();
         verifyNoMoreInteractions(waterTank);
-        verifyNoInteractions(waterPump);
+        verifyNoInteractions(waterPump, waterHeatingModule);
     }
 
     @Test

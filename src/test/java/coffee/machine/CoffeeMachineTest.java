@@ -1,7 +1,6 @@
 package coffee.machine;
 
 import coffee.machine.modules.CoffeeModule;
-import coffee.machine.modules.HeatingModule;
 import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +18,6 @@ class CoffeeMachineTest {
     @Mock
     private CoffeeModule coffeeModule;
 
-    @Mock
-    private HeatingModule heatingModule;
 
     @Mock
     private WastesModule wastesModule;
@@ -30,7 +27,7 @@ class CoffeeMachineTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, heatingModule, wastesModule);
+        coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, wastesModule);
     }
 
     @Test
@@ -40,15 +37,14 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
 
         verify(waterModule, times(1)).checkWaterTank(waterNeeded);
-        verify(heatingModule, times(1)).checkCapacity(waterNeeded);
         verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
         verify(wastesModule, times(1)).checkOverflow();
         verify(waterModule, times(1)).moveWaterToHeater(waterNeeded);
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(heatingModule, times(1)).heat(waterNeeded);
+        verify(waterModule, times(1)).heatWater(waterNeeded);
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
-        verifyNoMoreInteractions(waterModule, coffeeModule, heatingModule, wastesModule);
+        verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule);
     }
 
     @Test
@@ -58,14 +54,13 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.ESPRESSO.getCoffeeNeeded();
 
         verify(waterModule, times(1)).checkWaterTank(waterNeeded);
-        verify(heatingModule, times(1)).checkCapacity(waterNeeded);
         verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
         verify(wastesModule, times(1)).checkOverflow();
         verify(waterModule, times(1)).moveWaterToHeater(waterNeeded);
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(heatingModule, times(1)).heat(waterNeeded);
+        verify(waterModule, times(1)).heatWater(waterNeeded);
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
-        verifyNoMoreInteractions(waterModule, coffeeModule, heatingModule, wastesModule);
+        verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule);
     }
 }

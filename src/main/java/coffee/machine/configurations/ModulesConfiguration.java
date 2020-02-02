@@ -14,18 +14,18 @@ public class ModulesConfiguration {
     }
 
     @Bean
-    WaterModule waterModule(Tank waterTank, Pump waterPump) {
-        return WaterModuleImpl.of(waterTank, waterPump);
-    }
-
-    @Bean
     WastesModule wastesModule(Tank wastesTank) {
         return WastesModuleImpl.of(wastesTank);
     }
 
     @Bean
-    HeatingModule heatingModule(Container heaterContainer, Heater waterHeater) {
-        return HeatingModuleImpl.of(heaterContainer, waterHeater);
+    HeatingModule waterHeatingModule(Container waterHeaterContainer, Heater waterHeater) {
+        return HeatingModuleImpl.of(waterHeaterContainer, waterHeater);
+    }
+
+    @Bean
+    WaterModule waterModule(Tank waterTank, Pump waterPump, HeatingModule waterHeatingModule) {
+        return WaterModuleImpl.of(waterTank, waterPump, waterHeatingModule);
     }
 
 }
