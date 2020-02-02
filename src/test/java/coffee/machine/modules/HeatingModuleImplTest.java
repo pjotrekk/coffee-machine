@@ -60,7 +60,7 @@ class HeatingModuleImplTest {
 
         assertEquals(exception.getStatus(), HttpStatus.PRECONDITION_FAILED);
         assertNotNull(exception.getMessage());
-        assertTrue(exception.getMessage().contains("Heating module water tank is too small for such a coffee!"));
+        assertTrue(exception.getMessage().contains("The heating module container is too small"));
 
         verify(heaterContainer, times(1)).maxAmount();
         verifyNoMoreInteractions(heaterContainer);
