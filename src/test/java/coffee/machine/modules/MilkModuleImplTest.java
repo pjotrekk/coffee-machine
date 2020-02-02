@@ -37,29 +37,13 @@ class MilkModuleImplTest {
     }
 
     @Test
-    void shouldMoveMilkToHeater() {
-        milkModule.moveMilkToHeater(200);
+    void shouldPrepareMilk() {
+        milkModule.prepareMilk(200);
 
         verify(milkToHeaterPump, times(1)).pump(200);
-        verifyNoMoreInteractions(milkToHeaterPump);
-        verifyNoInteractions(milkHeatingModule, milkToCupPump);
-    }
-
-    @Test
-    void shouldMoveMilkToCup() {
-        milkModule.moveMilkToCup(200);
-
-        verify(milkToCupPump, times(1)).pump(200);
-        verifyNoMoreInteractions(milkToCupPump);
-        verifyNoInteractions(milkHeatingModule, milkToHeaterPump);
-    }
-
-    @Test
-    void shouldCallHeaterToHeat() {
-        milkModule.heatMilk(200);
-
         verify(milkHeatingModule, times(1)).heat(200);
-        verifyNoMoreInteractions(milkHeatingModule);
-        verifyNoInteractions(milkToHeaterPump, milkToCupPump);
+        verify(milkToCupPump, times(1)).pump(200);
+        verifyNoMoreInteractions(milkToHeaterPump, milkHeatingModule, milkToCupPump);
     }
+
 }

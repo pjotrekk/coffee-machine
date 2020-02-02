@@ -15,17 +15,21 @@ public class MilkModuleImpl implements MilkModule {
     }
 
     @Override
-    public void moveMilkToHeater(int amount) {
+    public void prepareMilk(int amount) {
+        moveMilkToHeater(amount);
+        heatMilk(amount);
+        moveMilkToCup(amount);
+    }
+
+    private void moveMilkToHeater(int amount) {
         milkToHeaterPump.pump(amount);
     }
 
-    @Override
-    public void moveMilkToCup(int amount) {
+    private void moveMilkToCup(int amount) {
         milkToCupPump.pump(amount);
     }
 
-    @Override
-    public void heatMilk(int amount) {
+    private void heatMilk(int amount) {
         milkHeatingModule.heat(amount);
     }
 }
