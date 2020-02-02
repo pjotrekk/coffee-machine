@@ -7,7 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @Log4j2
 public class WaterModuleImpl implements WaterModule {
     private WaterTank waterTank;

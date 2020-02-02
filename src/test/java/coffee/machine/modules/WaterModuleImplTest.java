@@ -26,7 +26,7 @@ class WaterModuleImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        waterModule = new WaterModuleImpl(waterTank, waterPump);
+        waterModule = WaterModuleImpl.of(waterTank, waterPump);
     }
 
     @Test
@@ -59,7 +59,7 @@ class WaterModuleImplTest {
     }
 
     @Test
-    void moveWaterToHeater() {
+    void shouldMoveWaterToHeater() {
         waterModule.moveWaterToHeater(200);
 
         verify(waterPump, times(1)).suction(200);
