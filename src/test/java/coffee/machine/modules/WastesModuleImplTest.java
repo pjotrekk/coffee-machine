@@ -28,19 +28,19 @@ class WastesModuleImplTest {
     @Test
     void shouldPassOverflowCheck() {
         given(wastesTank.amount()).willReturn(500);
-        given(wastesTank.maxCapacity()).willReturn(1000);
+        given(wastesTank.maxAmount()).willReturn(1000);
 
         wastesModule.checkOverflow();
 
         verify(wastesTank, times(1)).amount();
-        verify(wastesTank, times(1)).maxCapacity();
+        verify(wastesTank, times(1)).maxAmount();
         verifyNoMoreInteractions(wastesTank);
     }
 
     @Test
     void shouldFailOverflowCheck() {
         given(wastesTank.amount()).willReturn(1100);
-        given(wastesTank.maxCapacity()).willReturn(1000);
+        given(wastesTank.maxAmount()).willReturn(1000);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> wastesModule.checkOverflow());
@@ -50,7 +50,7 @@ class WastesModuleImplTest {
         assertTrue(exception.getMessage().contains("Wastes tank overflow!"));
 
         verify(wastesTank, times(1)).amount();
-        verify(wastesTank, times(1)).maxCapacity();
+        verify(wastesTank, times(1)).maxAmount();
         verifyNoMoreInteractions(wastesTank);
     }
 }

@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j2;
 public class HeaterContainer implements Container {
 
     @Override
-    public int maxCapacity() {
+    public int maxAmount() {
         return 400;
     }
 

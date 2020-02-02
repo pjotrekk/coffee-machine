@@ -41,11 +41,11 @@ class HeatingModuleImplTest {
     @Test
     void shouldPassCapacityCheck() {
         int waterNeeded = 200;
-        given(heaterContainer.maxCapacity()).willReturn(1000);
+        given(heaterContainer.maxAmount()).willReturn(1000);
 
         heatingModule.checkCapacity(waterNeeded);
 
-        verify(heaterContainer, times(1)).maxCapacity();
+        verify(heaterContainer, times(1)).maxAmount();
         verifyNoMoreInteractions(heaterContainer);
         verifyNoInteractions(heater);
     }
@@ -53,7 +53,7 @@ class HeatingModuleImplTest {
     @Test
     void shouldFailCapacityCheck() {
         int waterNeeded = 200;
-        given(heaterContainer.maxCapacity()).willReturn(50);
+        given(heaterContainer.maxAmount()).willReturn(50);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> heatingModule.checkCapacity(waterNeeded));
@@ -62,7 +62,7 @@ class HeatingModuleImplTest {
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("Heating module water tank is too small for such a coffee!"));
 
-        verify(heaterContainer, times(1)).maxCapacity();
+        verify(heaterContainer, times(1)).maxAmount();
         verifyNoMoreInteractions(heaterContainer);
         verifyNoInteractions(heater);
     }

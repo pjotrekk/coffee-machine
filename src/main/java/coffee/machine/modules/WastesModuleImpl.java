@@ -16,7 +16,7 @@ public class WastesModuleImpl implements WastesModule {
     }
 
     private void checkWastesTankOverflow() {
-        if (wastesTank.maxCapacity() <= wastesTank.amount()) {
+        if (wastesTank.maxAmount() <= wastesTank.amount()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
                     "Wastes tank overflow!");
         }

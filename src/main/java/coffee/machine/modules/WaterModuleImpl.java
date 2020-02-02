@@ -34,7 +34,7 @@ public class WaterModuleImpl implements WaterModule {
     }
 
     private void checkForOverflow() {
-        if (waterTank.maxCapacity() < waterTank.amount()) {
+        if (waterTank.maxAmount() < waterTank.amount()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
                     "Water tank overflow!");
         }

@@ -13,7 +13,7 @@ public class WaterTank implements Tank {
     }
 
     @Override
-    public int maxCapacity() {
+    public int maxAmount() {
         return 1500;
     }
 
