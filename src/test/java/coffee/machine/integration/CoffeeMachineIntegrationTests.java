@@ -1,5 +1,6 @@
-package coffee.machine;
+package coffee.machine.integration;
 
+import coffee.machine.CoffeeMachineApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

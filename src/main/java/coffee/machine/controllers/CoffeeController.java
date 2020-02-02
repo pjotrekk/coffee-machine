@@ -1,5 +1,7 @@
-package coffee.machine;
+package coffee.machine.controllers;
 
+import coffee.machine.CoffeeKind;
+import coffee.machine.CoffeeMachine;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

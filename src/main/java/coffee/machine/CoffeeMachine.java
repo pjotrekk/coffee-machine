@@ -50,7 +50,7 @@ public class CoffeeMachine {
         return coffeeMachine;
     }
 
-    void makeCoffee(CoffeeKind coffeeKind) {
+    public void makeCoffee(CoffeeKind coffeeKind) {
         checkContainers(coffeeKind);
         log.info("Making coffee {}", coffeeKind.toString());
         programs.get(coffeeKind).accept(coffeeKind);
