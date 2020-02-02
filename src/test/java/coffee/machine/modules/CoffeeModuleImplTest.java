@@ -64,7 +64,7 @@ class CoffeeModuleImplTest {
     }
 
     @Test
-    void ground() {
+    void testGround() {
         coffeeModule.ground(20);
 
         verify(grounder, times(1)).ground(20);
@@ -73,7 +73,7 @@ class CoffeeModuleImplTest {
     }
 
     @Test
-    void flipUsedCoffee() {
+    void testFlipUsedCoffee() {
         coffeeModule.flipUsedCoffee();
 
         verify(coffeePot, times(1)).flip();
