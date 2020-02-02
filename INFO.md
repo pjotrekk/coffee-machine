@@ -9,3 +9,7 @@ program would become inappropriate.
 In my coffee machine pumps mindlessly start pumping when they are asked to.
 They depend on validation checks and want to have pipes connected properly.
 They know how long they should work to transfer given amount of liquid.
+
+## Heater:
+Heater heats the water until it evaporates. The steam comes through the coffee pot, gets
+the essence of the coffee and condenses directly to the user's cup.
