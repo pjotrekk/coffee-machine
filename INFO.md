@@ -27,7 +27,7 @@ In Intellij:
 Install lombok plugin
 Run CoffeeMachineApplication
 
-Use POST requests on /coffee with param coffeeKind where
+Use POST requests on http://localhost:8086/coffee with param coffeeKind where
 CoffeeKind = { "Americano", "Espresso", "Latte", "Cappuccino" } - the capitalization doesn't matter.
 
 ## Comments
