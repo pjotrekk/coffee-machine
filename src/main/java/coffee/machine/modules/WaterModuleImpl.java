@@ -17,13 +17,13 @@ public class WaterModuleImpl implements WaterModule {
     public void checkWaterTank(int amountNeeded) {
         log.debug("Check water tank for overflow");
         if (waterTank.maxCapacity() < waterTank.amount()) {
-            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
                     "Water tank overflow!");
         }
 
         log.debug("Check water capacity");
         if (waterTank.amount() < amountNeeded) {
-            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
                     String.format("Insufficient water amount. Only %dml left", waterTank.amount()));
         }
     }

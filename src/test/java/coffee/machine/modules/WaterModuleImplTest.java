@@ -52,7 +52,7 @@ class WaterModuleImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> waterModule.checkWaterTank(waterNeeded));
 
-        assertEquals(exception.getStatus(), HttpStatus.EXPECTATION_FAILED);
+        assertEquals(exception.getStatus(), HttpStatus.PRECONDITION_FAILED);
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("Water tank overflow!"));
 
@@ -71,7 +71,7 @@ class WaterModuleImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> waterModule.checkWaterTank(waterNeeded));
 
-        assertEquals(exception.getStatus(), HttpStatus.EXPECTATION_FAILED);
+        assertEquals(exception.getStatus(), HttpStatus.PRECONDITION_FAILED);
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("Insufficient water amount. Only 50ml left"));
 

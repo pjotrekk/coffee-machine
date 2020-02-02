@@ -19,7 +19,7 @@ public class CoffeeModuleImpl implements CoffeeModule {
     public void checkCapacity(int amountNeeded) {
         log.debug("Check coffee capacity");
         if (coffeeTank.amount() < amountNeeded) {
-            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
                     String.format("Insufficient coffee amount. Only %dmg left", coffeeTank.amount()));
         }
     }

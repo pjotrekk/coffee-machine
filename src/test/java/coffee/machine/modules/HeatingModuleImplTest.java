@@ -58,7 +58,7 @@ class HeatingModuleImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> heatingModule.checkCapacity(waterNeeded));
 
-        assertEquals(exception.getStatus(), HttpStatus.EXPECTATION_FAILED);
+        assertEquals(exception.getStatus(), HttpStatus.PRECONDITION_FAILED);
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("Heating module water tank is too small for such a coffee!"));
 

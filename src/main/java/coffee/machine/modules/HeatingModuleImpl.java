@@ -24,7 +24,7 @@ public class HeatingModuleImpl implements HeatingModule {
     public void checkCapacity(int amount) {
         log.debug("Check heating module water tank capacity");
         if (waterTank.maxCapacity() < amount) {
-            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
                     "Heating module water tank is too small for such a coffee!");
         }
     }

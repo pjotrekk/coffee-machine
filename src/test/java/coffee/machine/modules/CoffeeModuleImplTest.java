@@ -54,7 +54,7 @@ class CoffeeModuleImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> coffeeModule.checkCapacity(coffeeNeeded));
 
-        assertEquals(exception.getStatus(), HttpStatus.EXPECTATION_FAILED);
+        assertEquals(exception.getStatus(), HttpStatus.PRECONDITION_FAILED);
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("Insufficient coffee amount. Only 20mg left"));
 
