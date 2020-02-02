@@ -11,6 +11,6 @@ public class WaterHeater implements Heater {
 
     @Override
     public void heat(int amount) {
-        log.debug("Heating {}ml of water", amount);
+        log.info("Heating {}ml of water", amount);
     }
 }

@@ -9,6 +9,6 @@ public class CoffeeGrounder implements Grounder {
 
     @Override
     public void ground(int amount) {
-        log.debug("Grounding {}mg of coffee", amount);
+        log.info("Grounding {}mg of coffee", amount);
     }
 }

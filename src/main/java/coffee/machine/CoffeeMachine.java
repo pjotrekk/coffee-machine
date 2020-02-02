@@ -7,6 +7,7 @@ import coffee.machine.modules.WaterModule;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.function.Consumer;
 import static coffee.machine.CoffeeKind.*;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Log4j2
 public class CoffeeMachine {
 
     @NonNull
@@ -49,6 +51,7 @@ public class CoffeeMachine {
 
     void makeCoffee(CoffeeKind coffeeKind) {
         checkContainers(coffeeKind);
+        log.info("Making coffee {}", coffeeKind.toString());
         programs.get(coffeeKind).accept(coffeeKind);
     }
 
