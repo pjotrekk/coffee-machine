@@ -13,8 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import static coffee.machine.CoffeeKind.AMERICANO;
-import static coffee.machine.CoffeeKind.ESPRESSO;
+import static coffee.machine.CoffeeKind.*;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class CoffeeMachine {
@@ -44,6 +43,7 @@ public class CoffeeMachine {
         );
         coffeeMachine.programs.put(ESPRESSO, coffeeMachine::makeBlackCoffee);
         coffeeMachine.programs.put(AMERICANO, coffeeMachine::makeBlackCoffee);
+        coffeeMachine.programs.put(LATTE, coffeeMachine::makeLatte);
         return coffeeMachine;
     }
 
@@ -53,11 +53,15 @@ public class CoffeeMachine {
     }
 
     private void makeBlackCoffee(CoffeeKind coffeeKind) {
-        int water = coffeeKind.getWaterNeeded();
-        int coffee = coffeeKind.getCoffeeNeeded();
+        coffeeModule.ground(coffeeKind.getCoffeeNeeded());
+        waterModule.prepareWater(coffeeKind.getWaterNeeded());
+        coffeeModule.flipUsedCoffee();
+    }
 
-        coffeeModule.ground(coffee);
-        waterModule.prepareWater(water);
+    private void makeLatte(CoffeeKind coffeeKind) {
+        coffeeModule.ground(coffeeKind.getCoffeeNeeded());
+        waterModule.prepareWater(coffeeKind.getWaterNeeded());
+        milkModule.prepareMilk(coffeeKind.getMilkNeeded());
         coffeeModule.flipUsedCoffee();
     }
 
@@ -65,6 +69,7 @@ public class CoffeeMachine {
         wastesModule.checkOverflow();
         waterModule.checkWaterTank(coffeeKind.getWaterNeeded());
         coffeeModule.checkCapacity(coffeeKind.getCoffeeNeeded());
+        milkModule.checkMilkContainer(coffeeKind.getMilkNeeded());
     }
 
 }
