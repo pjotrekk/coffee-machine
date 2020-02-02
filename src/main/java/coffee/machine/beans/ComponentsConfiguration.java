@@ -10,7 +10,9 @@ import coffee.machine.components.heaters.MilkHeater;
 import coffee.machine.components.heaters.WaterHeater;
 import coffee.machine.components.pots.CoffeePot;
 import coffee.machine.components.pots.Pot;
-import coffee.machine.components.pumps.LiquidPump;
+import coffee.machine.components.pumps.MilkToCupPump;
+import coffee.machine.components.pumps.MilkToHeaterPump;
+import coffee.machine.components.pumps.WaterPump;
 import coffee.machine.components.pumps.Pump;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +47,7 @@ public class ComponentsConfiguration {
 
     @Bean
     public Pump waterPump() {
-        return LiquidPump.create();
+        return WaterPump.create();
     }
 
     @Bean
@@ -70,12 +72,12 @@ public class ComponentsConfiguration {
 
     @Bean
     public Pump milkToHeaterPump() {
-        return LiquidPump.create();
+        return MilkToHeaterPump.create();
     }
 
     @Bean
     public Pump milkToCupPump() {
-        return LiquidPump.create();
+        return MilkToCupPump.create();
     }
 
     @Bean
