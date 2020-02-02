@@ -28,4 +28,14 @@ public class ModulesConfiguration {
         return WaterModuleImpl.of(waterTank, waterPump, waterHeatingModule);
     }
 
+    @Bean
+    HeatingModule milkHeatingModule(Container milkHeaterContainer, Heater milkHeater) {
+        return HeatingModuleImpl.of(milkHeaterContainer, milkHeater);
+    }
+
+    @Bean
+    MilkModule milkModule(HeatingModule milkHeatingModule, Pump milkToHeaterPump, Pump milkToCupPump) {
+        return MilkModuleImpl.of(milkHeatingModule, milkToHeaterPump, milkToCupPump);
+    }
+
 }

@@ -34,7 +34,7 @@ public class ComponentsConfiguration {
 
     @Bean
     public Pump waterPump() {
-        return WaterPump.create();
+        return LiquidPump.create();
     }
 
     @Bean
@@ -45,6 +45,26 @@ public class ComponentsConfiguration {
     @Bean
     public Grounder coffeeGrounder() {
         return CoffeeGrounder.create();
+    }
+
+    @Bean
+    public Heater milkHeater() {
+        return MilkHeater.create();
+    }
+
+    @Bean
+    public Container milkHeaterContainer() {
+        return HeaterContainer.create();
+    }
+
+    @Bean
+    public Pump milkToHeaterPump() {
+        return LiquidPump.create();
+    }
+
+    @Bean
+    public Pump milkToCupPump() {
+        return LiquidPump.create();
     }
 
 }

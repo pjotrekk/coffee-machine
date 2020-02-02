@@ -1,6 +1,7 @@
 package coffee.machine;
 
 import coffee.machine.modules.CoffeeModule;
+import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,16 +19,18 @@ class CoffeeMachineTest {
     @Mock
     private CoffeeModule coffeeModule;
 
-
     @Mock
     private WastesModule wastesModule;
+
+    @Mock
+    private MilkModule milkModule;
 
     private CoffeeMachine coffeeMachine;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, wastesModule);
+        coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, wastesModule, milkModule);
     }
 
     @Test
@@ -45,6 +48,7 @@ class CoffeeMachineTest {
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule);
+        verifyNoInteractions(milkModule);
     }
 
     @Test
@@ -62,5 +66,6 @@ class CoffeeMachineTest {
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule);
+        verifyNoInteractions(milkModule);
     }
 }

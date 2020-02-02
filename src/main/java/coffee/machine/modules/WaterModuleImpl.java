@@ -24,7 +24,7 @@ public class WaterModuleImpl implements WaterModule {
     @Override
     public void moveWaterToHeater(int amount) {
         log.debug("Transfer {}ml of water from water tank to heating tank", amount);
-        waterPump.suction(amount);
+        waterPump.pump(amount);
         log.debug("Water transferred successfully");
     }
 

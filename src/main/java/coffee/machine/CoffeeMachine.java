@@ -1,6 +1,7 @@
 package coffee.machine;
 
 import coffee.machine.modules.CoffeeModule;
+import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
 import lombok.AccessLevel;
@@ -27,15 +28,19 @@ public class CoffeeMachine {
     @NonNull
     private WastesModule wastesModule;
 
+    @NonNull
+    private MilkModule milkModule;
+
     private Map<CoffeeKind, Consumer<CoffeeKind>> programs = new EnumMap<>(CoffeeKind.class);
 
     public static CoffeeMachine of(WaterModule waterModule, CoffeeModule coffeeModule,
-                                   WastesModule wastesModule
+                                   WastesModule wastesModule, MilkModule milkModule
     ) {
         CoffeeMachine coffeeMachine = new CoffeeMachine(
                 Objects.requireNonNull(waterModule),
                 Objects.requireNonNull(coffeeModule),
-                Objects.requireNonNull(wastesModule)
+                Objects.requireNonNull(wastesModule),
+                Objects.requireNonNull(milkModule)
         );
         coffeeMachine.programs.put(ESPRESSO, coffeeMachine::makeBlackCoffee);
         coffeeMachine.programs.put(AMERICANO, coffeeMachine::makeBlackCoffee);

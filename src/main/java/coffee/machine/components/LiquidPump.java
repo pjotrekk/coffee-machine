@@ -5,9 +5,9 @@ import lombok.extern.log4j.Log4j2;
 
 @NoArgsConstructor(staticName = "create")
 @Log4j2
-public class WaterPump implements Pump {
+public class LiquidPump implements Pump {
     @Override
-    public void suction(int amount) {
-        log.debug("Pumping {}ml water from water tank to heater tank", amount);
+    public void pump(int amount) {
+        log.debug("Pumping {}ml of liquid", amount);
     }
 }
