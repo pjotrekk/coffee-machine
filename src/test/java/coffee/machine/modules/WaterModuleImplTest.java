@@ -33,10 +33,31 @@ class WaterModuleImplTest {
     void shouldPassCapacityCheck() {
         int waterNeeded = 200;
         given(waterTank.amount()).willReturn(1000);
+        given(waterTank.maxCapacity()).willReturn(1000);
 
-        waterModule.checkCapacity(waterNeeded);
+        waterModule.checkWaterTank(waterNeeded);
+
+        verify(waterTank, times(2)).amount();
+        verify(waterTank, times(1)).maxCapacity();
+        verifyNoMoreInteractions(waterTank);
+        verifyNoInteractions(waterPump);
+    }
+
+    @Test
+    void shouldFailOverflowCheck() {
+        int waterNeeded = 200;
+        given(waterTank.amount()).willReturn(1100);
+        given(waterTank.maxCapacity()).willReturn(1000);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> waterModule.checkWaterTank(waterNeeded));
+
+        assertEquals(exception.getStatus(), HttpStatus.EXPECTATION_FAILED);
+        assertNotNull(exception.getMessage());
+        assertTrue(exception.getMessage().contains("Water tank overflow!"));
 
         verify(waterTank, times(1)).amount();
+        verify(waterTank, times(1)).maxCapacity();
         verifyNoMoreInteractions(waterTank);
         verifyNoInteractions(waterPump);
     }
@@ -45,15 +66,17 @@ class WaterModuleImplTest {
     void shouldFailCapacityCheck() {
         int waterNeeded = 200;
         given(waterTank.amount()).willReturn(50);
+        given(waterTank.maxCapacity()).willReturn(1000);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
-                () -> waterModule.checkCapacity(waterNeeded));
+                () -> waterModule.checkWaterTank(waterNeeded));
 
         assertEquals(exception.getStatus(), HttpStatus.EXPECTATION_FAILED);
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("Insufficient water amount. Only 50ml left"));
 
-        verify(waterTank, times(2)).amount();
+        verify(waterTank, times(3)).amount();
+        verify(waterTank, times(1)).maxCapacity();
         verifyNoMoreInteractions(waterTank);
         verifyNoInteractions(waterPump);
     }

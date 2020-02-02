@@ -1,6 +1,6 @@
 package coffee.machine.modules;
 
 public interface WaterModule {
-    void checkCapacity(int amountNeeded);
+    void checkWaterTank(int amountNeeded);
     void moveWaterToHeater(int amount);
 }

@@ -14,7 +14,13 @@ public class WaterModuleImpl implements WaterModule {
     private Pump waterPump;
 
     @Override
-    public void checkCapacity(int amountNeeded) {
+    public void checkWaterTank(int amountNeeded) {
+        log.debug("Check water tank for overflow");
+        if (waterTank.maxCapacity() < waterTank.amount()) {
+            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,
+                    "Water tank overflow!");
+        }
+
         log.debug("Check water capacity");
         if (waterTank.amount() < amountNeeded) {
             throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,

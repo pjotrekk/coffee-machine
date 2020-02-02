@@ -17,7 +17,7 @@ class CoffeeMachine {
         int amountWater = coffeeKind.getWaterNeeded();
         int amountCoffee = coffeeKind.getCoffeeNeeded();
 
-        waterModule.checkCapacity(amountWater);
+        waterModule.checkWaterTank(amountWater);
         coffeeModule.checkCapacity(amountCoffee);
         wastesModule.checkOverflow();
         waterModule.moveWaterToHeater(amountWater);
