@@ -1,4 +1,4 @@
-package coffee.machine.pots;
+package coffee.machine.components;
 
 public interface CoffeePot {
     void flip();

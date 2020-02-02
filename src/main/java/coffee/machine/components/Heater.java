@@ -1,4 +1,4 @@
-package coffee.machine.heaters;
+package coffee.machine.components;
 
 public interface Heater {
     void heat(int amount);

@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.pumps.Pump;
-import coffee.machine.tanks.Tank;
+import coffee.machine.components.Pump;
+import coffee.machine.components.Tank;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

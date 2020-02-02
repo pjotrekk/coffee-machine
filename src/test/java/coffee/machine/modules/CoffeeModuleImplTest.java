@@ -1,8 +1,8 @@
 package coffee.machine.modules;
 
-import coffee.machine.grounders.Grounder;
-import coffee.machine.pots.CoffeePot;
-import coffee.machine.tanks.Tank;
+import coffee.machine.components.Grounder;
+import coffee.machine.components.CoffeePot;
+import coffee.machine.components.Tank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
