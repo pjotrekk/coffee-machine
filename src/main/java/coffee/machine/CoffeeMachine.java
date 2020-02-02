@@ -6,6 +6,9 @@ import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
 import lombok.Builder;
 
+import static coffee.machine.CoffeeKind.AMERICANO;
+import static coffee.machine.CoffeeKind.ESPRESSO;
+
 @Builder
 public class CoffeeMachine {
 
@@ -15,6 +18,19 @@ public class CoffeeMachine {
     private WastesModule wastesModule;
 
     void makeCoffee(CoffeeKind coffeeKind) {
+        switch (coffeeKind) {
+            case ESPRESSO:
+                makeBlackCoffee(ESPRESSO);
+                break;
+            case AMERICANO:
+                makeBlackCoffee(AMERICANO);
+                break;
+            default:
+                throw new AssertionError("Unknown coffee program: " + coffeeKind);
+        }
+    }
+
+    private void makeBlackCoffee(CoffeeKind coffeeKind) {
         int amountWater = coffeeKind.getWaterNeeded();
         int amountCoffee = coffeeKind.getCoffeeNeeded();
 
