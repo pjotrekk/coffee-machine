@@ -46,6 +46,7 @@ public class CoffeeMachine {
         coffeeMachine.programs.put(ESPRESSO, coffeeMachine::makeBlackCoffee);
         coffeeMachine.programs.put(AMERICANO, coffeeMachine::makeBlackCoffee);
         coffeeMachine.programs.put(LATTE, coffeeMachine::makeLatte);
+        coffeeMachine.programs.put(CAPPUCCINO, coffeeMachine::makeCappuccino);
         return coffeeMachine;
     }
 
@@ -65,6 +66,13 @@ public class CoffeeMachine {
         coffeeModule.ground(coffeeKind.getCoffeeNeeded());
         waterModule.prepareWater(coffeeKind.getWaterNeeded());
         milkModule.prepareMilk(coffeeKind.getMilkNeeded());
+        coffeeModule.flipUsedCoffee();
+    }
+
+    private void makeCappuccino(CoffeeKind coffeeKind) {
+        coffeeModule.ground(coffeeKind.getCoffeeNeeded());
+        waterModule.prepareWater(coffeeKind.getWaterNeeded());
+        milkModule.prepareFoamedMilk(coffeeKind.getMilkNeeded());
         coffeeModule.flipUsedCoffee();
     }
 

@@ -1,5 +1,6 @@
 package coffee.machine.modules;
 
+import coffee.machine.components.Foamer;
 import coffee.machine.components.Pump;
 import lombok.AllArgsConstructor;
 
@@ -8,6 +9,7 @@ public class MilkModuleImpl implements MilkModule {
     private HeatingModule milkHeatingModule;
     private Pump milkToHeaterPump;
     private Pump milkToCupPump;
+    private Foamer foamer;
 
     @Override
     public void checkMilkContainer(int amountNeeded) {
@@ -16,20 +18,17 @@ public class MilkModuleImpl implements MilkModule {
 
     @Override
     public void prepareMilk(int amount) {
-        moveMilkToHeater(amount);
-        heatMilk(amount);
-        moveMilkToCup(amount);
-    }
-
-    private void moveMilkToHeater(int amount) {
         milkToHeaterPump.pump(amount);
-    }
-
-    private void moveMilkToCup(int amount) {
+        milkHeatingModule.heat(amount);
         milkToCupPump.pump(amount);
     }
 
-    private void heatMilk(int amount) {
+    @Override
+    public void prepareFoamedMilk(int amount) {
+        milkToHeaterPump.pump(amount);
         milkHeatingModule.heat(amount);
+        foamer.foam(amount);
+        milkToCupPump.pump(amount);
     }
+
 }

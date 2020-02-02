@@ -1,9 +1,10 @@
 package coffee.machine;
 
 public enum CoffeeKind {
-    ESPRESSO(50, 20, 0),
-    AMERICANO(250, 20, 0),
-    LATTE(250, 20, 100);
+    ESPRESSO(50, 40, 0),
+    AMERICANO(250, 40, 0),
+    LATTE(250, 20, 100),
+    CAPPUCCINO(150, 20, 150);
 
     private int waterNeeded;
     private int coffeeNeeded;

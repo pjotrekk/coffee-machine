@@ -91,4 +91,25 @@ class CoffeeMachineTest {
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
     }
 
+    @Test
+    void makeCappuccino() {
+        coffeeMachine.makeCoffee(CoffeeKind.CAPPUCCINO);
+        int waterNeeded = CoffeeKind.CAPPUCCINO.getWaterNeeded();
+        int coffeeNeeded = CoffeeKind.CAPPUCCINO.getCoffeeNeeded();
+        int milkNeeded = CoffeeKind.CAPPUCCINO.getMilkNeeded();
+
+        verify(milkModule, times(1)).checkMilkContainer(milkNeeded);
+        verify(waterModule, times(1)).checkWaterTank(waterNeeded);
+        verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
+        verify(wastesModule, times(1)).checkOverflow();
+
+        verify(coffeeModule, times(1)).ground(coffeeNeeded);
+        verify(waterModule, times(1)).prepareWater(waterNeeded);
+        verify(milkModule, times(1)).prepareFoamedMilk(milkNeeded);
+        verify(coffeeModule, times(1)).flipUsedCoffee();
+
+        verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
+    }
+
+
 }

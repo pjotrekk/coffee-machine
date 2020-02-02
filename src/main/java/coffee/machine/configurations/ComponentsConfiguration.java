@@ -67,4 +67,9 @@ public class ComponentsConfiguration {
         return LiquidPump.create();
     }
 
+    @Bean
+    public Foamer milkFoamer() {
+        return MilkFoamer.create();
+    }
+
 }

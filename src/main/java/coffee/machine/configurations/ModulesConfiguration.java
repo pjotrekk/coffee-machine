@@ -34,8 +34,9 @@ public class ModulesConfiguration {
     }
 
     @Bean
-    MilkModule milkModule(HeatingModule milkHeatingModule, Pump milkToHeaterPump, Pump milkToCupPump) {
-        return MilkModuleImpl.of(milkHeatingModule, milkToHeaterPump, milkToCupPump);
+    MilkModule milkModule(HeatingModule milkHeatingModule, Pump milkToHeaterPump,
+                          Pump milkToCupPump, Foamer milkFoamer) {
+        return MilkModuleImpl.of(milkHeatingModule, milkToHeaterPump, milkToCupPump, milkFoamer);
     }
 
 }
