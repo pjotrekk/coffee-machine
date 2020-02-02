@@ -13,3 +13,7 @@ They know how long they should work to transfer given amount of liquid.
 ## Heater:
 Heater heats the water until it evaporates. The steam comes through the coffee pot, gets
 the essence of the coffee and condenses directly to the user's cup.
+
+## Grounder:
+Grounder grounds the coffee directly to the coffee pot. The internet says the coffee should't
+be flattened, just lay as it was poured.
