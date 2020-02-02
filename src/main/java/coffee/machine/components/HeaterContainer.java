@@ -9,7 +9,7 @@ public class HeaterContainer implements Container {
 
     @Override
     public int maxCapacity() {
-        log.debug("Maximum capacity of heater tank: 400ml");
+        log.debug("Maximum capacity of heater container: 400ml");
         return 400;
     }
 

@@ -3,12 +3,10 @@ package coffee.machine.modules;
 import coffee.machine.components.Pump;
 import coffee.machine.components.Tank;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor(staticName = "of")
-@Log4j2
 public class WaterModuleImpl implements WaterModule {
     private Tank waterTank;
     private Pump waterPump;
@@ -23,9 +21,7 @@ public class WaterModuleImpl implements WaterModule {
 
     @Override
     public void moveWaterToHeater(int amount) {
-        log.debug("Transfer {}ml of water from water tank to heating tank", amount);
         waterPump.pump(amount);
-        log.debug("Water transferred successfully");
     }
 
     @Override
