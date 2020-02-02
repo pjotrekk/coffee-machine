@@ -13,8 +13,8 @@ public class ComponentsConfiguration {
     }
 
     @Bean
-    public Tank heaterTank() {
-        return HeaterTank.create();
+    public Container heaterContainer() {
+        return HeaterContainer.create();
     }
 
     @Bean

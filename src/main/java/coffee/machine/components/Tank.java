@@ -1,6 +1,5 @@
 package coffee.machine.components;
 
-public interface Tank {
+public interface Tank extends Container {
     int amount();
-    int maxCapacity();
 }

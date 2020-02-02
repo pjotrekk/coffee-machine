@@ -24,8 +24,8 @@ public class ModulesConfiguration {
     }
 
     @Bean
-    HeatingModule heatingModule(Tank heaterTank, Heater waterHeater) {
-        return HeatingModuleImpl.of(heaterTank, waterHeater);
+    HeatingModule heatingModule(Container heaterContainer, Heater waterHeater) {
+        return HeatingModuleImpl.of(heaterContainer, waterHeater);
     }
 
 }
