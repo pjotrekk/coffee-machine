@@ -45,6 +45,7 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
 
         verify(waterModule, times(1)).checkWaterTank(waterNeeded);
+        verify(heatingModule, times(1)).checkCapacity(waterNeeded);
         verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
         verify(wastesModule, times(1)).checkOverflow();
         verify(waterModule, times(1)).moveWaterToHeater(waterNeeded);
@@ -62,6 +63,7 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.ESPRESSO.getCoffeeNeeded();
 
         verify(waterModule, times(1)).checkWaterTank(waterNeeded);
+        verify(heatingModule, times(1)).checkCapacity(waterNeeded);
         verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
         verify(wastesModule, times(1)).checkOverflow();
         verify(waterModule, times(1)).moveWaterToHeater(waterNeeded);
