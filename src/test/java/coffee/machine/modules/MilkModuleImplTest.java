@@ -4,11 +4,14 @@ import coffee.machine.components.foamers.Foamer;
 import coffee.machine.components.pumps.Pump;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class MilkModuleImplTest {
 
     @Mock
@@ -27,7 +30,6 @@ class MilkModuleImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         milkModule = MilkModuleImpl.of(milkHeatingModule, milkToHeaterPump, milkToCupPump, foamer);
     }
 

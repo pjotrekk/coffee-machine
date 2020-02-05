@@ -6,11 +6,13 @@ import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class CoffeeMachineTest {
 
     @Mock
@@ -29,7 +31,6 @@ class CoffeeMachineTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, wastesModule, milkModule);
     }
 

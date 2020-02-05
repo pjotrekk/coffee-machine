@@ -1,12 +1,13 @@
 package coffee.machine.modules;
 
+import coffee.machine.components.containers.Tank;
 import coffee.machine.components.grounders.Grounder;
 import coffee.machine.components.pots.Pot;
-import coffee.machine.components.containers.Tank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class CoffeeModuleImplTest {
 
     @Mock
@@ -29,7 +31,6 @@ class CoffeeModuleImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         coffeeModule = CoffeeModuleImpl.of(coffeeTank, coffeePot, grounder);
     }
 
