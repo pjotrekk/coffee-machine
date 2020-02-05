@@ -9,10 +9,8 @@ import org.springframework.stereotype.Component;
 @Log4j2
 public class WaterHeater implements Heater {
 
-    private static final int TEMPERATURE = 100;
-
     @Override
     public void heat(int amount) {
-        log.info("Heating {}ml of water", amount);
+        log.info("Evaporating {}ml of water", amount);
     }
 }

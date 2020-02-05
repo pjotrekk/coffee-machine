@@ -13,6 +13,7 @@ public class MilkHeater implements Heater {
 
     @Override
     public void heat(int amount) {
-        log.info("Heating {}ml of milk", amount);
+        log.info("Heating {}ml of milk to {} celsius degrees",
+                amount, TEMPERATURE);
     }
 }
