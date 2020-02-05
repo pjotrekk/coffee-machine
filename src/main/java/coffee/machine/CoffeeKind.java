@@ -1,5 +1,10 @@
 package coffee.machine;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum CoffeeKind {
     ESPRESSO(50, 40, 0),
     AMERICANO(250, 40, 0),
@@ -9,22 +14,4 @@ public enum CoffeeKind {
     private int waterNeeded;
     private int coffeeNeeded;
     private int milkNeeded;
-
-    CoffeeKind(int waterNeeded, int coffeeNeeded, int milkNeeded) {
-        this.waterNeeded = waterNeeded;
-        this.coffeeNeeded = coffeeNeeded;
-        this.milkNeeded = milkNeeded;
-    }
-
-    public int getWaterNeeded() {
-        return waterNeeded;
-    }
-
-    public int getCoffeeNeeded() {
-        return coffeeNeeded;
-    }
-
-    public int getMilkNeeded() {
-        return milkNeeded;
-    }
 }
