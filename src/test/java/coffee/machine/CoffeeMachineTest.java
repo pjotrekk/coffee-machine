@@ -4,9 +4,9 @@ import coffee.machine.modules.CoffeeModule;
 import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -27,13 +27,8 @@ class CoffeeMachineTest {
     @Mock
     private MilkModule milkModule;
 
+    @InjectMocks
     private CoffeeMachine coffeeMachine;
-
-    @BeforeEach
-    void setUp() {
-        coffeeMachine = new CoffeeMachine(waterModule, coffeeModule,
-                wastesModule, milkModule);
-    }
 
     @Test
     void shouldUseProperModulesToMakeAmericano() {

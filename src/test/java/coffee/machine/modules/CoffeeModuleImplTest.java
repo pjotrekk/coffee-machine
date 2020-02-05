@@ -3,9 +3,9 @@ package coffee.machine.modules;
 import coffee.machine.components.containers.Tank;
 import coffee.machine.components.grounders.Grounder;
 import coffee.machine.components.pots.Pot;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -27,12 +27,8 @@ class CoffeeModuleImplTest {
     @Mock
     private Grounder grounder;
 
-    private CoffeeModule coffeeModule;
-
-    @BeforeEach
-    void setUp() {
-        coffeeModule = CoffeeModuleImpl.of(coffeeTank, coffeePot, grounder);
-    }
+    @InjectMocks
+    private CoffeeModuleImpl coffeeModule;
 
     @Test
     void shouldPassCapacityCheck() {

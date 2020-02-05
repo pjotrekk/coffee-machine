@@ -2,11 +2,10 @@ package coffee.machine.modules;
 
 import coffee.machine.components.containers.Container;
 import coffee.machine.components.heaters.Heater;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,12 +23,8 @@ class HeatingModuleImplTest {
     @Mock
     private Heater heater;
 
-    private HeatingModule heatingModule;
-
-    @BeforeEach
-    void setUp() {
-        heatingModule = HeatingModuleImpl.of(heaterContainer, heater);
-    }
+    @InjectMocks
+    private HeatingModuleImpl heatingModule;
 
     @Test
     void shouldCallHeater() {

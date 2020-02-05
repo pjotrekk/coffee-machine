@@ -2,9 +2,9 @@ package coffee.machine.modules;
 
 import coffee.machine.components.containers.Tank;
 import coffee.machine.components.pumps.Pump;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -26,12 +26,8 @@ class WaterModuleImplTest {
     @Mock
     private HeatingModule waterHeatingModule;
 
-    private WaterModule waterModule;
-
-    @BeforeEach
-    void setUp() {
-        waterModule = WaterModuleImpl.of(waterTank, waterPump, waterHeatingModule);
-    }
+    @InjectMocks
+    private WaterModuleImpl waterModule;
 
     @Test
     void shouldPassAmountCheck() {
