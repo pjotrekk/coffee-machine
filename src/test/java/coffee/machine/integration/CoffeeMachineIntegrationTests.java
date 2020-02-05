@@ -20,16 +20,17 @@ public class CoffeeMachineIntegrationTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Before
-	public void setUp() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-	}
+	@SpyBean
+	private CoffeeMachine coffeeMachine;
 
 	@Test
 	public void shouldAcceptCoffeeRequest() throws Exception {
 		this.mockMvc.perform(post("/coffee")
 				.param("coffeeKind", "Cappuccino"))
 				.andExpect(status().isCreated());
+
+		verify(coffeeMachine, times(1)).makeCoffee(CoffeeKind.CAPPUCCINO);
+		verifyNoMoreInteractions(coffeeMachine);
 	}
 
 	@Test
@@ -37,6 +38,8 @@ public class CoffeeMachineIntegrationTests {
 		this.mockMvc.perform(post("/coffee")
 				.param("coffeeKind", "Unknown"))
 				.andExpect(status().isBadRequest());
+
+		verifyNoInteractions(coffeeMachine);
 	}
 
 }
