@@ -40,10 +40,7 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.AMERICANO.getMilkNeeded();
 
-        verify(milkModule, times(1)).checkMilkContainer(milkNeeded);
-        verify(waterModule, times(1)).checkWaterTank(waterNeeded);
-        verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
-        verify(wastesModule, times(1)).checkOverflow();
+        checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
         verify(waterModule, times(1)).prepareWater(waterNeeded);
@@ -59,10 +56,7 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.ESPRESSO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.ESPRESSO.getMilkNeeded();
 
-        verify(milkModule, times(1)).checkMilkContainer(milkNeeded);
-        verify(waterModule, times(1)).checkWaterTank(waterNeeded);
-        verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
-        verify(wastesModule, times(1)).checkOverflow();
+        checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
         verify(waterModule, times(1)).prepareWater(waterNeeded);
@@ -78,10 +72,7 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.LATTE.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.LATTE.getMilkNeeded();
 
-        verify(milkModule, times(1)).checkMilkContainer(milkNeeded);
-        verify(waterModule, times(1)).checkWaterTank(waterNeeded);
-        verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
-        verify(wastesModule, times(1)).checkOverflow();
+        checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
         verify(waterModule, times(1)).prepareWater(waterNeeded);
@@ -98,10 +89,7 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.CAPPUCCINO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.CAPPUCCINO.getMilkNeeded();
 
-        verify(milkModule, times(1)).checkMilkContainer(milkNeeded);
-        verify(waterModule, times(1)).checkWaterTank(waterNeeded);
-        verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
-        verify(wastesModule, times(1)).checkOverflow();
+        checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
         verify(waterModule, times(1)).prepareWater(waterNeeded);
@@ -111,5 +99,11 @@ class CoffeeMachineTest {
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
     }
 
+    private void checkModules(int waterNeeded, int coffeeNeeded, int milkNeeded) {
+        verify(milkModule, times(1)).checkMilkContainer(milkNeeded);
+        verify(waterModule, times(1)).checkWaterTank(waterNeeded);
+        verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
+        verify(wastesModule, times(1)).checkOverflow();
+    }
 
 }
