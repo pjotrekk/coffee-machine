@@ -34,7 +34,7 @@ class CoffeeMachineTest {
     }
 
     @Test
-    void makeCoffeeAmericano() {
+    void shouldUseProperModulesToMakeAmericano() {
         coffeeMachine.makeCoffee(CoffeeKind.AMERICANO);
         int waterNeeded = CoffeeKind.AMERICANO.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
@@ -53,7 +53,7 @@ class CoffeeMachineTest {
     }
 
     @Test
-    void makeCoffeeEspresso() {
+    void shouldUseProperModulesToMakeEspresso() {
         coffeeMachine.makeCoffee(CoffeeKind.ESPRESSO);
         int waterNeeded = CoffeeKind.ESPRESSO.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.ESPRESSO.getCoffeeNeeded();
@@ -72,7 +72,7 @@ class CoffeeMachineTest {
     }
 
     @Test
-    void makeCoffeeLatte() {
+    void shouldUseProperModulesToMakeLatte() {
         coffeeMachine.makeCoffee(CoffeeKind.LATTE);
         int waterNeeded = CoffeeKind.LATTE.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.LATTE.getCoffeeNeeded();
@@ -92,7 +92,7 @@ class CoffeeMachineTest {
     }
 
     @Test
-    void makeCappuccino() {
+    void shouldUseProperModulesToMakeCappuccino() {
         coffeeMachine.makeCoffee(CoffeeKind.CAPPUCCINO);
         int waterNeeded = CoffeeKind.CAPPUCCINO.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.CAPPUCCINO.getCoffeeNeeded();

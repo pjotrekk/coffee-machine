@@ -30,7 +30,7 @@ class HeatingModuleImplTest {
     }
 
     @Test
-    void testHeat() {
+    void shouldCallHeater() {
         heatingModule.heat(200);
 
         verify(heater, times(1)).heat(200);

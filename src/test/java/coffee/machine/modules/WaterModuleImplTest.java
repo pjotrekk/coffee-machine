@@ -33,7 +33,7 @@ class WaterModuleImplTest {
     }
 
     @Test
-    void shouldPassCapacityCheck() {
+    void shouldPassAmountCheck() {
         int waterNeeded = 200;
         given(waterTank.amount()).willReturn(1000);
         given(waterTank.maxAmount()).willReturn(1000);
@@ -67,7 +67,7 @@ class WaterModuleImplTest {
     }
 
     @Test
-    void shouldFailCapacityCheck() {
+    void shouldFailAmountCheck() {
         int waterNeeded = 200;
         given(waterTank.amount()).willReturn(50);
         given(waterTank.maxAmount()).willReturn(1000);
@@ -86,7 +86,7 @@ class WaterModuleImplTest {
     }
 
     @Test
-    void shouldMoveWaterToHeater() {
+    void shouldCallProperComponentsToPrepareWater() {
         int waterAmount = 200;
         waterModule.prepareWater(waterAmount);
 

@@ -63,7 +63,7 @@ class CoffeeModuleImplTest {
     }
 
     @Test
-    void testGround() {
+    void shouldCallGrounder() {
         int coffeeAmount = 20;
         coffeeModule.ground(coffeeAmount);
 
@@ -73,7 +73,7 @@ class CoffeeModuleImplTest {
     }
 
     @Test
-    void testFlipUsedCoffee() {
+    void shouldCallFlipOnCoffeePot() {
         coffeeModule.flipUsedCoffee();
 
         verify(coffeePot, times(1)).flip();

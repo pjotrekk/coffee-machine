@@ -32,7 +32,7 @@ class MilkModuleImplTest {
     }
 
     @Test
-    void shouldCallHeaterToCheckCapacity() {
+    void shouldCallHeaterToCheckItsCapacity() {
         int milkAmount = 200;
         milkModule.checkMilkContainer(milkAmount);
 
@@ -42,7 +42,7 @@ class MilkModuleImplTest {
     }
 
     @Test
-    void shouldPrepareMilk() {
+    void shouldCallProperComponentsToPrepareMilk() {
         int milkAmount = 200;
         milkModule.prepareMilk(milkAmount);
 
@@ -54,7 +54,7 @@ class MilkModuleImplTest {
     }
 
     @Test
-    void shouldPrepareFoamedMilk() {
+    void shouldCallProperComponentsToPrepareFoamedMilk() {
         int milkAmount = 200;
         milkModule.prepareFoamedMilk(milkAmount);
 
