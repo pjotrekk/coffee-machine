@@ -5,8 +5,10 @@ import coffee.machine.components.pots.Pot;
 import coffee.machine.components.containers.Tank;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+@Component
 @AllArgsConstructor(staticName = "of")
 public class CoffeeModuleImpl implements CoffeeModule {
     private final Tank coffeeTank;

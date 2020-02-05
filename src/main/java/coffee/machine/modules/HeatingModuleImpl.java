@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-
 @AllArgsConstructor(staticName = "of")
 public class HeatingModuleImpl implements HeatingModule {
     private final Container heaterContainer;

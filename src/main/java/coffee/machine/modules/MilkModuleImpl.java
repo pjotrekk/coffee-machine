@@ -3,7 +3,9 @@ package coffee.machine.modules;
 import coffee.machine.components.foamers.Foamer;
 import coffee.machine.components.pumps.Pump;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @AllArgsConstructor(staticName = "of")
 public class MilkModuleImpl implements MilkModule {
     private final HeatingModule milkHeatingModule;

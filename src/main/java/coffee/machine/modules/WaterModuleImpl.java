@@ -4,8 +4,10 @@ import coffee.machine.components.pumps.Pump;
 import coffee.machine.components.containers.Tank;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+@Component
 @AllArgsConstructor(staticName = "of")
 public class WaterModuleImpl implements WaterModule {
     private final Tank waterTank;

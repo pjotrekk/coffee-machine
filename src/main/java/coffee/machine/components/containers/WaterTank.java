@@ -2,7 +2,9 @@ package coffee.machine.components.containers;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
+@Component
 @NoArgsConstructor(staticName = "create")
 @Log4j2
 public class WaterTank implements Tank {
