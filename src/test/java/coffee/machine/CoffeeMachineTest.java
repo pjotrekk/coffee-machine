@@ -31,7 +31,8 @@ class CoffeeMachineTest {
 
     @BeforeEach
     void setUp() {
-        coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, wastesModule, milkModule);
+        coffeeMachine = new CoffeeMachine(waterModule, coffeeModule,
+                wastesModule, milkModule);
     }
 
     @Test

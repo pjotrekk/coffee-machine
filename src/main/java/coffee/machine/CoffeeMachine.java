@@ -4,10 +4,8 @@ import coffee.machine.modules.CoffeeModule;
 import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
-import lombok.AccessLevel;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -16,38 +14,30 @@ import java.util.function.Consumer;
 
 import static coffee.machine.CoffeeKind.*;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Component
 @Log4j2
 public class CoffeeMachine {
 
-    @NonNull
     private final WaterModule waterModule;
 
-    @NonNull
     private final CoffeeModule coffeeModule;
 
-    @NonNull
     private final WastesModule wastesModule;
 
-    @NonNull
     private final MilkModule milkModule;
 
     private final Map<CoffeeKind, Consumer<CoffeeKind>> programs = new EnumMap<>(CoffeeKind.class);
 
-    public static CoffeeMachine of(WaterModule waterModule, CoffeeModule coffeeModule,
-                                   WastesModule wastesModule, MilkModule milkModule
-    ) {
-        CoffeeMachine coffeeMachine = new CoffeeMachine(
-                Objects.requireNonNull(waterModule),
-                Objects.requireNonNull(coffeeModule),
-                Objects.requireNonNull(wastesModule),
-                Objects.requireNonNull(milkModule)
-        );
-        coffeeMachine.programs.put(ESPRESSO, coffeeMachine::makeBlackCoffee);
-        coffeeMachine.programs.put(AMERICANO, coffeeMachine::makeBlackCoffee);
-        coffeeMachine.programs.put(LATTE, coffeeMachine::makeLatte);
-        coffeeMachine.programs.put(CAPPUCCINO, coffeeMachine::makeCappuccino);
-        return coffeeMachine;
+    public CoffeeMachine(WaterModule waterModule, CoffeeModule coffeeModule,
+                         WastesModule wastesModule, MilkModule milkModule) {
+        this.waterModule = Objects.requireNonNull(waterModule);
+        this.coffeeModule = Objects.requireNonNull(coffeeModule);
+        this.wastesModule = Objects.requireNonNull(wastesModule);
+        this.milkModule = Objects.requireNonNull(milkModule);
+        programs.put(ESPRESSO, this::makeBlackCoffee);
+        programs.put(AMERICANO, this::makeBlackCoffee);
+        programs.put(LATTE, this::makeLatte);
+        programs.put(CAPPUCCINO, this::makeCappuccino);
     }
 
     public void makeCoffee(CoffeeKind coffeeKind) {
