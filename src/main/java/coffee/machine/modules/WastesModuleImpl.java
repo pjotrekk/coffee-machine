@@ -8,7 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor(staticName = "of")
 public class WastesModuleImpl implements WastesModule {
 
-    private Tank wastesTank;
+    private final Tank wastesTank;
 
     @Override
     public void checkOverflow() {

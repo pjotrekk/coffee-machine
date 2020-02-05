@@ -9,9 +9,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor(staticName = "of")
 public class CoffeeModuleImpl implements CoffeeModule {
-    private Tank coffeeTank;
-    private Pot coffeePot;
-    private Grounder grounder;
+    private final Tank coffeeTank;
+    private final Pot coffeePot;
+    private final Grounder grounder;
 
     @Override
     public void checkCapacity(int amountNeeded) {

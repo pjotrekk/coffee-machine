@@ -6,10 +6,10 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "of")
 public class MilkModuleImpl implements MilkModule {
-    private HeatingModule milkHeatingModule;
-    private Pump milkToHeaterPump;
-    private Pump milkToCupPump;
-    private Foamer foamer;
+    private final HeatingModule milkHeatingModule;
+    private final Pump milkToHeaterPump;
+    private final Pump milkToCupPump;
+    private final Foamer foamer;
 
     @Override
     public void checkMilkContainer(int amountNeeded) {

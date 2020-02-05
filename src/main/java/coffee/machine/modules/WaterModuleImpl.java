@@ -8,9 +8,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor(staticName = "of")
 public class WaterModuleImpl implements WaterModule {
-    private Tank waterTank;
-    private Pump waterPump;
-    private HeatingModule waterHeatingModule;
+    private final Tank waterTank;
+    private final Pump waterPump;
+    private final HeatingModule waterHeatingModule;
 
     @Override
     public void checkWaterTank(int amountNeeded) {

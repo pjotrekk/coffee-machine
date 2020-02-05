@@ -21,18 +21,18 @@ import static coffee.machine.CoffeeKind.*;
 public class CoffeeMachine {
 
     @NonNull
-    private WaterModule waterModule;
+    private final WaterModule waterModule;
 
     @NonNull
-    private CoffeeModule coffeeModule;
+    private final CoffeeModule coffeeModule;
 
     @NonNull
-    private WastesModule wastesModule;
+    private final WastesModule wastesModule;
 
     @NonNull
-    private MilkModule milkModule;
+    private final MilkModule milkModule;
 
-    private Map<CoffeeKind, Consumer<CoffeeKind>> programs = new EnumMap<>(CoffeeKind.class);
+    private final Map<CoffeeKind, Consumer<CoffeeKind>> programs = new EnumMap<>(CoffeeKind.class);
 
     public static CoffeeMachine of(WaterModule waterModule, CoffeeModule coffeeModule,
                                    WastesModule wastesModule, MilkModule milkModule

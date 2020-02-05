@@ -9,8 +9,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor(staticName = "of")
 public class HeatingModuleImpl implements HeatingModule {
-    private Container heaterContainer;
-    private Heater heater;
+    private final Container heaterContainer;
+    private final Heater heater;
 
     @Override
     public void heat(int amount) {

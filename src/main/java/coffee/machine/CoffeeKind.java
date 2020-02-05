@@ -11,7 +11,7 @@ public enum CoffeeKind {
     LATTE(250, 20, 100),
     CAPPUCCINO(150, 20, 150);
 
-    private int waterNeeded;
-    private int coffeeNeeded;
-    private int milkNeeded;
+    private final int waterNeeded;
+    private final int coffeeNeeded;
+    private final int milkNeeded;
 }
