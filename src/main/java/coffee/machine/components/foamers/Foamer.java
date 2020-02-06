@@ -1,5 +1,12 @@
 package coffee.machine.components.foamers;
 
-public interface Foamer {
-    void foam(int amount);
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@NoArgsConstructor(staticName = "create")
+public class Foamer {
+
+    public void foam(int amount) {}
+
 }
