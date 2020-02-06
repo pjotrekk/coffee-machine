@@ -1,8 +1,8 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.grounders.Grounder;
-import coffee.machine.components.containers.Tank;
-import coffee.machine.components.pots.CoffeePot;
+import coffee.machine.components.Grounder;
+import coffee.machine.components.Tank;
+import coffee.machine.components.CoffeePot;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

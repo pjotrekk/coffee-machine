@@ -1,6 +1,5 @@
-package coffee.machine.components.pots;
+package coffee.machine.components;
 
-import coffee.machine.components.containers.Tank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

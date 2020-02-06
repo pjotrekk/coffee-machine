@@ -1,7 +1,5 @@
-package coffee.machine.components.grounders;
+package coffee.machine.components;
 
-import coffee.machine.components.containers.Tank;
-import coffee.machine.components.pots.CoffeePot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

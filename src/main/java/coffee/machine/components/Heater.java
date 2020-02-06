@@ -1,4 +1,4 @@
-package coffee.machine.components.heaters;
+package coffee.machine.components;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.foamers.Foamer;
-import coffee.machine.components.pumps.Pump;
+import coffee.machine.components.Foamer;
+import coffee.machine.components.Pump;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

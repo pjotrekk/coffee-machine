@@ -1,4 +1,4 @@
-package coffee.machine.components.containers;
+package coffee.machine.components;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

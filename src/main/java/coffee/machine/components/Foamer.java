@@ -1,4 +1,4 @@
-package coffee.machine.components.foamers;
+package coffee.machine.components;
 
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package coffee.machine.components.containers;
+package coffee.machine.components;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

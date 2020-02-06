@@ -1,6 +1,5 @@
-package coffee.machine.components.pumps;
+package coffee.machine.components;
 
-import coffee.machine.components.containers.Tank;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "of")

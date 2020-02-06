@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.containers.Tank;
-import coffee.machine.components.pumps.Pump;
+import coffee.machine.components.Tank;
+import coffee.machine.components.Pump;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

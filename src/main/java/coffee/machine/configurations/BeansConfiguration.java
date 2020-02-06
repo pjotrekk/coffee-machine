@@ -1,8 +1,8 @@
 package coffee.machine.configurations;
 
-import coffee.machine.components.containers.Tank;
-import coffee.machine.components.heaters.Heater;
-import coffee.machine.components.pumps.Pump;
+import coffee.machine.components.Tank;
+import coffee.machine.components.Heater;
+import coffee.machine.components.Pump;
 import coffee.machine.modules.HeatingModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
