@@ -15,7 +15,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class WaterModuleImplTest {
+class WaterModuleTest {
 
     @Mock
     private Tank waterTank;
@@ -27,7 +27,7 @@ class WaterModuleImplTest {
     private HeatingModule waterHeatingModule;
 
     @InjectMocks
-    private WaterModuleImpl waterModule;
+    private WaterModule waterModule;
 
     @Test
     void shouldPassAmountCheck() {

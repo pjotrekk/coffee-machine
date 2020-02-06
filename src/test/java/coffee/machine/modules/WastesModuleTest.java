@@ -14,13 +14,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class WastesModuleImplTest {
+class WastesModuleTest {
 
     @Mock
     private Tank wastesTank;
 
     @InjectMocks
-    private WastesModuleImpl wastesModule;
+    private WastesModule wastesModule;
 
     @Test
     void shouldPassOverflowCheck() {

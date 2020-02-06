@@ -1,7 +1,47 @@
 package coffee.machine.modules;
 
-public interface CoffeeModule {
-    void checkCapacity(int amountNeeded);
-    void ground(int amount);
-    void flipUsedCoffee();
+import coffee.machine.components.grounders.Grounder;
+import coffee.machine.components.pots.Pot;
+import coffee.machine.components.containers.Tank;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+@Component
+@AllArgsConstructor(staticName = "of")
+public class CoffeeModule {
+    private final Tank coffeeTank;
+    private final Pot coffeePot;
+    private final Grounder grounder;
+
+    public void checkCapacity(int amountNeeded) {
+        checkCoffeeTankOverflow();
+        checkCoffeeResources(amountNeeded);
+    }
+
+    public void ground(int amount) {
+        grounder.ground(amount);
+    }
+
+    public void flipUsedCoffee() {
+        coffeePot.flip();
+    }
+
+    private void checkCoffeeTankOverflow() {
+        if (coffeeTank.isOverflown()) {
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
+                    String.format("Tank overflow. Reduce the amount" +
+                            " to be below the maximum value of %dmg", coffeeTank.getCapacity()));
+        }
+    }
+
+    private void checkCoffeeResources(int amountNeeded) {
+        if (coffeeTank.getCurrentAmount() < amountNeeded) {
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
+                    String.format("Insufficient coffee amount. Only %dmg left. You should" +
+                                    "refill the coffee tank", coffeeTank.getCurrentAmount()));
+        }
+    }
+
 }

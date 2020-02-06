@@ -16,7 +16,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CoffeeModuleImplTest {
+class CoffeeModuleTest {
 
     @Mock
     private Tank coffeeTank;
@@ -28,7 +28,7 @@ class CoffeeModuleImplTest {
     private Grounder grounder;
 
     @InjectMocks
-    private CoffeeModuleImpl coffeeModule;
+    private CoffeeModule coffeeModule;
 
     @Test
     void shouldPassCapacityCheck() {

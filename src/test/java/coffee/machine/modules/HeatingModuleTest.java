@@ -15,7 +15,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class HeatingModuleImplTest {
+class HeatingModuleTest {
 
     @Mock
     private Tank heaterTank;
@@ -24,7 +24,7 @@ class HeatingModuleImplTest {
     private Heater heater;
 
     @InjectMocks
-    private HeatingModuleImpl heatingModule;
+    private HeatingModule heatingModule;
 
     @Test
     void shouldCallHeater() {

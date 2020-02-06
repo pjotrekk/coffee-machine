@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class MilkModuleImplTest {
+class MilkModuleTest {
 
     @Mock
     private HeatingModule milkHeatingModule;
@@ -29,7 +29,7 @@ class MilkModuleImplTest {
 
     @BeforeEach
     void setUp() {
-        milkModule = MilkModuleImpl.of(milkHeatingModule, milkToHeaterPump, milkToCupPump, foamer);
+        milkModule = MilkModule.of(milkHeatingModule, milkToHeaterPump, milkToCupPump, foamer);
     }
 
     @Test

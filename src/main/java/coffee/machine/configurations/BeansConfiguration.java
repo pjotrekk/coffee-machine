@@ -4,7 +4,6 @@ import coffee.machine.components.containers.Tank;
 import coffee.machine.components.heaters.Heater;
 import coffee.machine.components.pumps.Pump;
 import coffee.machine.modules.HeatingModule;
-import coffee.machine.modules.HeatingModuleImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -43,12 +42,12 @@ public class BeansConfiguration {
 
     @Bean
     HeatingModule waterHeatingModule(Tank waterHeaterTank, Heater waterHeater) {
-        return HeatingModuleImpl.of(waterHeaterTank, waterHeater);
+        return HeatingModule.of(waterHeaterTank, waterHeater);
     }
 
     @Bean
     HeatingModule milkHeatingModule(Tank milkHeaterTank, Heater milkHeater) {
-        return HeatingModuleImpl.of(milkHeaterTank, milkHeater);
+        return HeatingModule.of(milkHeaterTank, milkHeater);
     }
 
     @Bean
