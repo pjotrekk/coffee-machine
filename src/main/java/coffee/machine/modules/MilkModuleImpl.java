@@ -19,17 +19,12 @@ public class MilkModuleImpl implements MilkModule {
     }
 
     @Override
-    public void prepareMilk(int amount) {
+    public void prepareMilk(int amount, boolean withFoam) {
         milkToHeaterPump.pump(amount);
         milkHeatingModule.heat(amount);
-        milkToCupPump.pump(amount);
-    }
-
-    @Override
-    public void prepareFoamedMilk(int amount) {
-        milkToHeaterPump.pump(amount);
-        milkHeatingModule.heat(amount);
-        foamer.foam(amount);
+        if (withFoam) {
+            foamer.foam(amount);
+        }
         milkToCupPump.pump(amount);
     }
 

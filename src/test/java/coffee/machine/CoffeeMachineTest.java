@@ -32,10 +32,11 @@ class CoffeeMachineTest {
 
     @Test
     void shouldUseProperModulesToMakeAmericano() {
-        coffeeMachine.makeCoffee(CoffeeKind.AMERICANO);
         int waterNeeded = CoffeeKind.AMERICANO.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.AMERICANO.getMilkNeeded();
+
+        coffeeMachine.makeCoffee(CoffeeKind.AMERICANO);
 
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
@@ -48,10 +49,11 @@ class CoffeeMachineTest {
 
     @Test
     void shouldUseProperModulesToMakeEspresso() {
-        coffeeMachine.makeCoffee(CoffeeKind.ESPRESSO);
         int waterNeeded = CoffeeKind.ESPRESSO.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.ESPRESSO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.ESPRESSO.getMilkNeeded();
+
+        coffeeMachine.makeCoffee(CoffeeKind.ESPRESSO);
 
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
@@ -64,16 +66,18 @@ class CoffeeMachineTest {
 
     @Test
     void shouldUseProperModulesToMakeLatte() {
-        coffeeMachine.makeCoffee(CoffeeKind.LATTE);
         int waterNeeded = CoffeeKind.LATTE.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.LATTE.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.LATTE.getMilkNeeded();
+        boolean withFoam = CoffeeKind.LATTE.isWithFoam();
+
+        coffeeMachine.makeCoffee(CoffeeKind.LATTE);
 
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
         verify(waterModule, times(1)).prepareWater(waterNeeded);
-        verify(milkModule, times(1)).prepareMilk(milkNeeded);
+        verify(milkModule, times(1)).prepareMilk(milkNeeded, withFoam);
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
@@ -81,16 +85,18 @@ class CoffeeMachineTest {
 
     @Test
     void shouldUseProperModulesToMakeCappuccino() {
-        coffeeMachine.makeCoffee(CoffeeKind.CAPPUCCINO);
         int waterNeeded = CoffeeKind.CAPPUCCINO.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.CAPPUCCINO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.CAPPUCCINO.getMilkNeeded();
+        boolean withFoam = CoffeeKind.CAPPUCCINO.isWithFoam();
+
+        coffeeMachine.makeCoffee(CoffeeKind.CAPPUCCINO);
 
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
         verify(waterModule, times(1)).prepareWater(waterNeeded);
-        verify(milkModule, times(1)).prepareFoamedMilk(milkNeeded);
+        verify(milkModule, times(1)).prepareMilk(milkNeeded, withFoam);
         verify(coffeeModule, times(1)).flipUsedCoffee();
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);

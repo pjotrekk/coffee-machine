@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;
@@ -46,7 +45,7 @@ class MilkModuleImplTest {
     @Test
     void shouldCallProperComponentsToPrepareMilk() {
         int milkAmount = 200;
-        milkModule.prepareMilk(milkAmount);
+        milkModule.prepareMilk(milkAmount, false);
 
         verify(milkToHeaterPump, times(1)).pump(milkAmount);
         verify(milkHeatingModule, times(1)).heat(milkAmount);
@@ -58,7 +57,7 @@ class MilkModuleImplTest {
     @Test
     void shouldCallProperComponentsToPrepareFoamedMilk() {
         int milkAmount = 200;
-        milkModule.prepareFoamedMilk(milkAmount);
+        milkModule.prepareMilk(milkAmount, true);
 
         verify(milkToHeaterPump, times(1)).pump(milkAmount);
         verify(milkHeatingModule, times(1)).heat(milkAmount);
