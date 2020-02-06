@@ -17,7 +17,8 @@ public class CoffeeModuleImpl implements CoffeeModule {
 
     @Override
     public void checkCapacity(int amountNeeded) {
-        checkWaterTankCapacity(amountNeeded);
+        checkCoffeeTankOverflow();
+        checkCoffeeResources(amountNeeded);
     }
 
     @Override
@@ -30,10 +31,19 @@ public class CoffeeModuleImpl implements CoffeeModule {
         coffeePot.flip();
     }
 
-    private void checkWaterTankCapacity(int amountNeeded) {
-        if (coffeeTank.amount() < amountNeeded) {
+    private void checkCoffeeTankOverflow() {
+        if (coffeeTank.isOverflown()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    String.format("Insufficient coffee amount. Only %dmg left", coffeeTank.amount()));
+                    String.format("Tank overflow. Reduce the amount" +
+                            " to be below the maximum value of %dmg", coffeeTank.getCapacity()));
+        }
+    }
+
+    private void checkCoffeeResources(int amountNeeded) {
+        if (coffeeTank.getCurrentAmount() < amountNeeded) {
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
+                    String.format("Insufficient coffee amount. Only %dmg left. You should" +
+                                    "refill the coffee tank", coffeeTank.getCurrentAmount()));
         }
     }
 

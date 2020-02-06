@@ -2,6 +2,7 @@ package coffee.machine.integration;
 
 import coffee.machine.CoffeeKind;
 import coffee.machine.CoffeeMachine;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -22,6 +24,12 @@ public class CoffeeMachineIntegrationTests {
 
 	@SpyBean
 	private CoffeeMachine coffeeMachine;
+
+	@BeforeEach
+	void setUp() throws Exception {
+		this.mockMvc.perform(put("/tanks/water").param("amount", "1000"));
+		this.mockMvc.perform(put("/tanks/coffee").param("amount", "500"));
+	}
 
 	@Test
 	public void shouldAcceptCoffeeRequest() throws Exception {

@@ -24,30 +24,27 @@ class WastesModuleImplTest {
 
     @Test
     void shouldPassOverflowCheck() {
-        given(wastesTank.amount()).willReturn(500);
-        given(wastesTank.maxAmount()).willReturn(1000);
+        given(wastesTank.isOverflown()).willReturn(false);
 
         wastesModule.checkOverflow();
 
-        verify(wastesTank, times(1)).amount();
-        verify(wastesTank, times(1)).maxAmount();
+        verify(wastesTank, times(1)).isOverflown();
         verifyNoMoreInteractions(wastesTank);
     }
 
     @Test
     void shouldFailOverflowCheck() {
-        given(wastesTank.amount()).willReturn(1100);
-        given(wastesTank.maxAmount()).willReturn(1000);
+        given(wastesTank.isOverflown()).willReturn(true);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> wastesModule.checkOverflow());
 
         assertEquals(exception.getStatus(), HttpStatus.PRECONDITION_FAILED);
         assertNotNull(exception.getMessage());
-        assertTrue(exception.getMessage().contains("Wastes tank overflow!"));
+        assertTrue(exception.getMessage().contains("Wastes tank overflow! You should" +
+                " remove the used coffee."));
 
-        verify(wastesTank, times(1)).amount();
-        verify(wastesTank, times(1)).maxAmount();
+        verify(wastesTank, times(1)).isOverflown();
         verifyNoMoreInteractions(wastesTank);
     }
 }

@@ -36,16 +36,18 @@ public class WaterModuleImpl implements WaterModule {
     }
 
     private void checkForOverflow() {
-        if (waterTank.maxAmount() < waterTank.amount()) {
+        if (waterTank.isOverflown()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    "Water tank overflow!");
+                    String.format("Water tank overflow! You should reduce the amount " +
+                            "of water to the maximum of %dml", waterTank.getCapacity()));
         }
     }
 
     private void checkWaterCapacity(int amountNeeded) {
-        if (waterTank.amount() < amountNeeded) {
+        if (waterTank.getCurrentAmount() < amountNeeded) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    String.format("Insufficient water amount. Only %dml left", waterTank.amount()));
+                    String.format("Insufficient water amount. Only %dml left. Refill " +
+                                    "the water tank", waterTank.getCurrentAmount()));
         }
     }
 }

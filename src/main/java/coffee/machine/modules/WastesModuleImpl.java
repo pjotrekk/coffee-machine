@@ -14,13 +14,10 @@ public class WastesModuleImpl implements WastesModule {
 
     @Override
     public void checkOverflow() {
-        checkWastesTankOverflow();
-    }
-
-    private void checkWastesTankOverflow() {
-        if (wastesTank.maxAmount() <= wastesTank.amount()) {
+        if (wastesTank.isOverflown()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    "Wastes tank overflow!");
+                    "Wastes tank overflow! You should remove the used coffee.");
         }
     }
+
 }

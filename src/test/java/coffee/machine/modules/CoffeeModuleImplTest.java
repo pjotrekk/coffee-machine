@@ -33,11 +33,12 @@ class CoffeeModuleImplTest {
     @Test
     void shouldPassCapacityCheck() {
         int coffeeNeeded = 20;
-        given(coffeeTank.amount()).willReturn(500);
+        given(coffeeTank.getCurrentAmount()).willReturn(500);
 
         coffeeModule.checkCapacity(coffeeNeeded);
 
-        verify(coffeeTank, times(1)).amount();
+        verify(coffeeTank, times(1)).getCurrentAmount();
+        verify(coffeeTank, times(1)).isOverflown();
         verifyNoMoreInteractions(coffeeTank);
         verifyNoInteractions(coffeePot, grounder);
     }
@@ -45,7 +46,7 @@ class CoffeeModuleImplTest {
     @Test
     void shouldFailCapacityCheck() {
         int coffeeNeeded = 50;
-        given(coffeeTank.amount()).willReturn(20);
+        given(coffeeTank.getCurrentAmount()).willReturn(20);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> coffeeModule.checkCapacity(coffeeNeeded));
@@ -54,7 +55,8 @@ class CoffeeModuleImplTest {
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("Insufficient coffee amount. Only 20mg left"));
 
-        verify(coffeeTank, times(2)).amount();
+        verify(coffeeTank, times(2)).getCurrentAmount();
+        verify(coffeeTank, times(1)).isOverflown();
         verifyNoMoreInteractions(coffeeTank);
         verifyNoInteractions(coffeePot, grounder);
     }
