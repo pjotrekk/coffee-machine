@@ -1,8 +1,8 @@
 package coffee.machine.modules;
 
 import coffee.machine.components.grounders.Grounder;
-import coffee.machine.components.pots.Pot;
 import coffee.machine.components.containers.Tank;
+import coffee.machine.components.pots.CoffeePot;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor(staticName = "of")
 public class CoffeeModule {
     private final Tank coffeeTank;
-    private final Pot coffeePot;
+    private final CoffeePot coffeePot;
     private final Grounder grounder;
 
     public void checkCapacity(int amountNeeded) {

@@ -1,15 +1,22 @@
 package coffee.machine.components.pots;
 
-import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import coffee.machine.components.containers.Tank;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor(staticName = "create")
-@Log4j2
-public class CoffeePot implements Pot {
-    @Override
+@RequiredArgsConstructor(staticName = "of")
+public class CoffeePot {
+
+    @Getter @Setter
+    private int currentAmount = 0;
+
+    private final Tank wastesTank;
+
     public void flip() {
-        log.info("Removing used coffee");
+        wastesTank.setCurrentAmount(wastesTank.getCurrentAmount() + currentAmount);
     }
+
 }
