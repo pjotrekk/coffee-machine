@@ -1,7 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.pumps.Pump;
 import coffee.machine.components.containers.Tank;
+import coffee.machine.components.pumps.Pump;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor(staticName = "of")
 public class WaterModuleImpl implements WaterModule {
     private final Tank waterTank;
-    private final Pump waterPump;
+    private final Pump waterToHeaterPump;
     private final HeatingModule waterHeatingModule;
 
     @Override
@@ -28,7 +28,7 @@ public class WaterModuleImpl implements WaterModule {
     }
 
     private void moveWaterToHeater(int amount) {
-        waterPump.pump(amount);
+        waterToHeaterPump.pump(amount);
     }
 
     private void heatWater(int amount) {

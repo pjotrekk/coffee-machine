@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class MilkModuleImpl implements MilkModule {
     private final HeatingModule milkHeatingModule;
     private final Pump milkToHeaterPump;
-    private final Pump milkToCupPump;
+    private final Pump milkHeaterToCupPump;
     private final Foamer foamer;
 
     @Override
@@ -25,7 +25,7 @@ public class MilkModuleImpl implements MilkModule {
         if (withFoam) {
             foamer.foam(amount);
         }
-        milkToCupPump.pump(amount);
+        milkHeaterToCupPump.pump(amount);
     }
 
 }
