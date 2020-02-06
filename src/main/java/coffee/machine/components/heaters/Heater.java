@@ -1,5 +1,11 @@
 package coffee.machine.components.heaters;
 
-public interface Heater {
-    void heat(int amount);
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor(staticName = "create")
+public class Heater {
+
+    private final int temperature;
+
+    public void heat(int amount) {}
 }

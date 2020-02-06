@@ -65,4 +65,13 @@ public class BeansConfiguration {
         return Pump.of(waterTank, waterHeaterTank);
     }
 
+    @Bean
+    Heater milkHeater() {
+        return Heater.create(65);
+    }
+
+    @Bean
+    Heater waterHeater() {
+        return Heater.create(100);
+    }
 }
