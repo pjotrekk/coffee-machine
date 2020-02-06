@@ -1,7 +1,5 @@
 package coffee.machine.configurations;
 
-import coffee.machine.components.containers.Container;
-import coffee.machine.components.containers.HeaterContainer;
 import coffee.machine.components.containers.Tank;
 import coffee.machine.components.heaters.Heater;
 import coffee.machine.modules.HeatingModule;
@@ -28,22 +26,23 @@ public class BeansConfiguration {
     }
 
     @Bean
-    HeatingModule waterHeatingModule(Container waterHeaterContainer, Heater waterHeater) {
-        return HeatingModuleImpl.of(waterHeaterContainer, waterHeater);
+    Tank waterHeaterTank() {
+        return Tank.of(500);
     }
 
     @Bean
-    HeatingModule milkHeatingModule(Container milkHeaterContainer, Heater milkHeater) {
-        return HeatingModuleImpl.of(milkHeaterContainer, milkHeater);
+    Tank milkHeaterTank() {
+        return Tank.of(400);
     }
 
     @Bean
-    public Container milkHeaterContainer() {
-        return HeaterContainer.create();
+    HeatingModule waterHeatingModule(Tank waterHeaterTank, Heater waterHeater) {
+        return HeatingModuleImpl.of(waterHeaterTank, waterHeater);
     }
 
     @Bean
-    public Container waterHeaterContainer() {
-        return HeaterContainer.create();
+    HeatingModule milkHeatingModule(Tank milkHeaterTank, Heater milkHeater) {
+        return HeatingModuleImpl.of(milkHeaterTank, milkHeater);
     }
+
 }
