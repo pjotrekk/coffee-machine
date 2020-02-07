@@ -1,5 +1,6 @@
 package coffee.machine.controllers;
 
+import coffee.machine.Coffee;
 import coffee.machine.CoffeeKind;
 import coffee.machine.CoffeeMachine;
 import lombok.AllArgsConstructor;
@@ -15,11 +16,11 @@ public class CoffeeController {
 
     private final CoffeeMachine coffeeMachine;
 
-    @PostMapping
+    @GetMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void makeCoffee(@RequestParam(name = "coffeeKind") CoffeeKind coffeeKind) {
+    public Coffee makeCoffee(@RequestParam(name = "coffeeKind") CoffeeKind coffeeKind) {
         log.info("Request for {} arrived", coffeeKind.toString().toLowerCase());
-        coffeeMachine.makeCoffee(coffeeKind);
+        return coffeeMachine.makeCoffee(coffeeKind);
     }
 
 }

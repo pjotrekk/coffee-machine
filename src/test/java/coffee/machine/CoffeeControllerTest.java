@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CoffeeController.class)
@@ -22,7 +22,7 @@ public class CoffeeControllerTest {
 
     @Test
     public void shouldAcceptCorrectCoffee() throws Exception {
-        this.mockMvc.perform(post("/coffee")
+        this.mockMvc.perform(get("/coffee")
                 .param("coffeeKind", "ESPRESSO"))
                 .andExpect(status().isCreated());
 
@@ -32,7 +32,7 @@ public class CoffeeControllerTest {
 
     @Test
     public void shouldAcceptCoffeeWithoutUppercase() throws Exception {
-        this.mockMvc.perform(post("/coffee")
+        this.mockMvc.perform(get("/coffee")
                 .param("coffeeKind", "ameRIcano"))
                 .andExpect(status().isCreated());
 
@@ -42,7 +42,7 @@ public class CoffeeControllerTest {
 
     @Test
     public void shouldNotAcceptNotRegisteredCoffeeKind() throws Exception {
-        this.mockMvc.perform(post("/coffee")
+        this.mockMvc.perform(get("/coffee")
                 .param("coffeeKind", "noSuchCoffee"))
                 .andExpect(status().isBadRequest());
 

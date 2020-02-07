@@ -1,6 +1,7 @@
 package coffee.machine;
 
 import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.ingredients.Milk;
 import coffee.machine.modules.CoffeeModule;
 import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
@@ -22,16 +23,23 @@ public class CoffeeMachine {
 
     private final MilkModule milkModule;
 
-    public void makeCoffee(CoffeeKind coffeeKind) {
+    public Coffee makeCoffee(CoffeeKind coffeeKind) {
         checkContainers(coffeeKind);
 
         log.info("Making coffee {}", coffeeKind.toString());
 
+        Coffee coffee = Coffee.create();
+
         coffeeModule.ground(coffeeKind.getCoffeeNeeded());
+
         CoffeeEssence essence = waterModule.prepareTheEssence(coffeeKind.getWaterNeeded());
+        coffee.setCoffeeEssence(essence);
+
         if (coffeeKind.getMilkNeeded() > 0) {
-            milkModule.prepareMilk(coffeeKind.getMilkNeeded(), coffeeKind.isWithFoam());
+            Milk milk = milkModule.prepareMilk(coffeeKind.getMilkNeeded(), coffeeKind.isWithFoam());
+            coffee.setMilk(milk);
         }
+        return coffee;
     }
 
     private void checkContainers(CoffeeKind coffeeKind) {
