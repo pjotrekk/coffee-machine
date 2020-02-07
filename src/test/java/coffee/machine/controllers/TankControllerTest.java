@@ -79,7 +79,6 @@ class TankControllerTest {
         Exception exception = this.mockMvc.perform(put("/tanks/coffee")
                 .param("amount", "800"))
                 .andExpect(status().isPayloadTooLarge())
-                .andExpect(status().isPayloadTooLarge())
                 .andReturn().getResolvedException();
 
         assertNotNull(exception);
@@ -90,6 +89,19 @@ class TankControllerTest {
         verify(tank, times(1)).isOverflown();
         verify(tank, times(1)).getCapacity();
         verifyNoMoreInteractions(tank);
+    }
+
+    @Test
+    public void shouldNotAllowAmountBelowZero() throws Exception {
+        Exception exception = this.mockMvc.perform(put("/tanks/coffee")
+                .param("amount", "-10"))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResolvedException();
+
+        assertNotNull(exception);
+        assertThat(exception.getMessage()).contains( "The amount cannot be below zero");
+
+        verifyNoInteractions(tank);
     }
 
     @Test

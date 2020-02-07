@@ -20,6 +20,7 @@ public class TankController {
 
     @PutMapping("/water")
     public void refillWater(@RequestParam(name = "amount") int amount) {
+        validateAmount(amount);
         waterTank.setCurrentAmount(amount);
         if (waterTank.isOverflown()) {
             throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
@@ -30,6 +31,7 @@ public class TankController {
 
     @PutMapping("/coffee")
     public void refillCoffee(@RequestParam(name = "amount") int amount) {
+        validateAmount(amount);
         coffeeTank.setCurrentAmount(amount);
         if (coffeeTank.isOverflown()) {
             throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
@@ -40,6 +42,7 @@ public class TankController {
 
     @PutMapping("/milk")
     public void refillMilk(@RequestParam(name = "amount") int amount) {
+        validateAmount(amount);
         milkTank.setCurrentAmount(amount);
         if (coffeeTank.isOverflown()) {
             throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
@@ -51,6 +54,13 @@ public class TankController {
     @PutMapping("/wastes")
     public void clearWastes() {
         wastesTank.setCurrentAmount(0);
+    }
+
+    private void validateAmount(int amount) {
+        if (amount < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The amount cannot be below zero");
+        }
     }
 
 }
