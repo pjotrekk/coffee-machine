@@ -41,7 +41,7 @@ class CoffeeMachineTest {
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareWater(waterNeeded);
+        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
     }
@@ -57,7 +57,7 @@ class CoffeeMachineTest {
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareWater(waterNeeded);
+        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
     }
@@ -74,7 +74,7 @@ class CoffeeMachineTest {
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareWater(waterNeeded);
+        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
         verify(milkModule, times(1)).prepareMilk(milkNeeded, withFoam);
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
@@ -92,7 +92,7 @@ class CoffeeMachineTest {
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
 
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareWater(waterNeeded);
+        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
         verify(milkModule, times(1)).prepareMilk(milkNeeded, withFoam);
 
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);

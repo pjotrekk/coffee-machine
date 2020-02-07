@@ -1,7 +1,10 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.Tank;
+import coffee.machine.components.CoffeePot;
 import coffee.machine.components.Pump;
+import coffee.machine.components.Tank;
+import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.ingredients.Water;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +29,9 @@ class WaterModuleTest {
     @Mock
     private HeatingModule waterHeatingModule;
 
+    @Mock
+    private CoffeePot coffeePot;
+
     @InjectMocks
     private WaterModule waterModule;
 
@@ -40,7 +46,7 @@ class WaterModuleTest {
         verify(waterTank, times(1)).getCurrentAmount();
         verify(waterTank, times(1)).isOverflown();
         verifyNoMoreInteractions(waterTank);
-        verifyNoInteractions(waterPump);
+        verifyNoInteractions(waterPump, coffeePot);
     }
 
     @Test
@@ -60,7 +66,7 @@ class WaterModuleTest {
         verify(waterTank, times(1)).isOverflown();
         verify(waterTank, times(1)).getCapacity();
         verifyNoMoreInteractions(waterTank);
-        verifyNoInteractions(waterPump, waterHeatingModule);
+        verifyNoInteractions(waterPump, waterHeatingModule, coffeePot);
     }
 
     @Test
@@ -80,17 +86,23 @@ class WaterModuleTest {
         verify(waterTank, times(2)).getCurrentAmount();
         verify(waterTank, times(1)).isOverflown();
         verifyNoMoreInteractions(waterTank);
-        verifyNoInteractions(waterPump, waterHeatingModule);
+        verifyNoInteractions(waterPump, waterHeatingModule, coffeePot);
     }
 
     @Test
-    void shouldCallProperComponentsToPrepareWater() {
+    void shouldCallProperComponentsToPrepareTheEssence() {
         int waterAmount = 200;
-        waterModule.prepareWater(waterAmount);
+        Water water = Water.of(200, Water.BOIL_TEMPERATURE);
+        given(waterHeatingModule.heatContent()).willReturn(water);
+        given(coffeePot.combineSteamAndGroundedCoffee(water)).willReturn(CoffeeEssence.of(200, 20));
+
+        waterModule.prepareTheEssence(waterAmount);
 
         verify(waterPump, times(1)).pump(waterAmount);
         verify(waterHeatingModule, times(1)).heatContent();
+        verify(coffeePot, times(1)).combineSteamAndGroundedCoffee(water);
         verifyNoMoreInteractions(waterPump, waterHeatingModule);
         verifyNoInteractions(waterTank);
     }
+
 }
