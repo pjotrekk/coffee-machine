@@ -103,7 +103,7 @@ class CoffeeMachineTest {
     }
 
     private void checkModules(int waterNeeded, int coffeeNeeded, int milkNeeded) {
-        verify(milkModule, times(1)).checkMilkContainer(milkNeeded);
+        verify(milkModule, times(1)).checkMilkTank(milkNeeded);
         verify(waterModule, times(1)).checkWaterTank(waterNeeded);
         verify(coffeeModule, times(1)).checkCapacity(coffeeNeeded);
         verify(wastesModule, times(1)).checkOverflow();

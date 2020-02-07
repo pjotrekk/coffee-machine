@@ -1,68 +1,81 @@
 package coffee.machine.modules;
 
 import coffee.machine.components.Foamer;
+import coffee.machine.components.Heater;
+import coffee.machine.components.LiquidTank;
 import coffee.machine.components.Pump;
+import coffee.machine.ingredients.Milk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class MilkModuleTest {
 
-    @Mock
+    private LiquidTank milkTank;
+    private LiquidTank milkHeaterTank;
     private HeatingModule milkHeatingModule;
-
-    @Mock
-    private Pump milkToHeaterPump;
-
-    @Mock
-    private Pump milkToCupPump;
-
-    @Mock
     private Foamer foamer;
+    private Pump milkToHeaterPump;
 
     private MilkModule milkModule;
 
     @BeforeEach
     void setUp() {
-        milkModule = MilkModule.of(milkHeatingModule, milkToHeaterPump, milkToCupPump, foamer);
+        milkTank = LiquidTank.of(Milk.of(200, 20), 400);
+        milkHeaterTank = LiquidTank.of(Milk.create(), 200);
+        milkToHeaterPump = Pump.of(milkTank, milkHeaterTank);
+        milkHeatingModule = HeatingModule.of(milkHeaterTank, Heater.create(Milk.PERFECT_TEMPERATURE));
+        foamer = Foamer.create();
+        milkModule = MilkModule.of(milkTank, milkHeatingModule, milkToHeaterPump, foamer);
     }
 
     @Test
-    void shouldCallHeaterToCheckItsCapacity() {
+    void shouldPrepareNonFoamedMilk() {
         int milkAmount = 200;
-        milkModule.checkMilkContainer(milkAmount);
+        Milk heatedMilk = milkModule.prepareMilk(milkAmount, false);
 
-        verifyNoMoreInteractions(milkHeatingModule);
-        verifyNoInteractions(milkToHeaterPump, milkToCupPump);
+        assertThat(heatedMilk.isFoamed()).isFalse();
+        assertThat(heatedMilk.getAmount()).isEqualTo(milkAmount);
+        assertThat(heatedMilk.getTemperature()).isEqualTo(Milk.PERFECT_TEMPERATURE);
     }
 
     @Test
-    void shouldCallProperComponentsToPrepareMilk() {
+    void shouldPrepareFoamedMilk() {
         int milkAmount = 200;
-        milkModule.prepareMilk(milkAmount, false);
+        Milk heatedMilk = milkModule.prepareMilk(milkAmount, true);
 
-        verify(milkToHeaterPump, times(1)).pump(milkAmount);
-        verify(milkHeatingModule, times(1)).heatContent();
-        verify(milkToCupPump, times(1)).pump(milkAmount);
-        verifyNoMoreInteractions(milkToHeaterPump, milkHeatingModule, milkToCupPump);
-        verifyNoInteractions(foamer);
+        assertThat(heatedMilk.isFoamed()).isTrue();
+        assertThat(heatedMilk.getAmount()).isEqualTo(milkAmount);
+        assertThat(heatedMilk.getTemperature()).isEqualTo(Milk.PERFECT_TEMPERATURE);
     }
 
     @Test
-    void shouldCallProperComponentsToPrepareFoamedMilk() {
-        int milkAmount = 200;
-        milkModule.prepareMilk(milkAmount, true);
+    void shouldFailAmountCheck() {
+        int milkAmount = 1000;
+        ResponseStatusException rse = assertThrows(ResponseStatusException.class, () ->
+                milkModule.checkMilkTank(milkAmount));
 
-        verify(milkToHeaterPump, times(1)).pump(milkAmount);
-        verify(milkHeatingModule, times(1)).heatContent();
-        verify(foamer, times(1)).foam(milkAmount);
-        verify(milkToCupPump, times(1)).pump(milkAmount);
-        verifyNoMoreInteractions(milkToHeaterPump, milkHeatingModule, milkToCupPump, foamer);
+        assertThat(rse).isNotNull().hasMessageContaining("Insufficient milk amount. Only 200ml left." +
+                " Refill the milk tank");
+        assertThat(rse.getStatus()).isEqualTo(HttpStatus.PRECONDITION_FAILED);
+    }
+
+    @Test
+    void shouldFailOverflowCheck() {
+        milkTank.setCurrentAmount(2000);
+        ResponseStatusException rse = assertThrows(ResponseStatusException.class, () ->
+                milkModule.checkMilkTank(200));
+
+        assertThat(rse).isNotNull().hasMessageContaining("Milk tank overflow! You should reduce the amount " +
+                "of milk to the maximum of 400ml");
+        assertThat(rse.getStatus()).isEqualTo(HttpStatus.PRECONDITION_FAILED);
     }
 
 }

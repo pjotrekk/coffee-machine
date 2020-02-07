@@ -8,7 +8,7 @@ public class Milk extends Liquid {
     public static final int PERFECT_TEMPERATURE = 65;
 
     @Getter @Setter
-    boolean foamed;
+    private boolean foamed = false;
 
     private Milk() {}
 

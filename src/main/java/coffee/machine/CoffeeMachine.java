@@ -38,7 +38,7 @@ public class CoffeeMachine {
         wastesModule.checkOverflow();
         waterModule.checkWaterTank(coffeeKind.getWaterNeeded());
         coffeeModule.checkCapacity(coffeeKind.getCoffeeNeeded());
-        milkModule.checkMilkContainer(coffeeKind.getMilkNeeded());
+        milkModule.checkMilkTank(coffeeKind.getMilkNeeded());
     }
 
 }
