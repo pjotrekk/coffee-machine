@@ -16,6 +16,7 @@ public class TankController {
     private final Tank waterTank;
     private final Tank coffeeTank;
     private final Tank wastesTank;
+    private final Tank milkTank;
 
     @PutMapping("/water")
     public void refillWater(@RequestParam(name = "amount") int amount) {
@@ -34,6 +35,16 @@ public class TankController {
             throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
                     String.format("Coffee tank overflow! You should reduce the amount " +
                             "of coffee to the maximum of %dmg", coffeeTank.getCapacity()));
+        }
+    }
+
+    @PutMapping("/milk")
+    public void refillMilk(@RequestParam(name = "amount") int amount) {
+        milkTank.setCurrentAmount(amount);
+        if (coffeeTank.isOverflown()) {
+            throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
+                    String.format("Milk tank overflow! You should reduce the amount " +
+                            "of milk to the maximum of %dmg", milkTank.getCapacity()));
         }
     }
 

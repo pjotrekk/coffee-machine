@@ -1,8 +1,10 @@
 package coffee.machine.ingredients;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+@EqualsAndHashCode(callSuper = false)
 public class Milk extends Liquid {
 
     public static final int PERFECT_TEMPERATURE = 65;
@@ -20,6 +22,11 @@ public class Milk extends Liquid {
         super(amount, temperature);
     }
 
+    private Milk(int amount, int temperature, boolean foamed) {
+        super(amount, temperature);
+        this.foamed = foamed;
+    }
+
     public static Milk create() {
         return new Milk();
     }
@@ -30,6 +37,10 @@ public class Milk extends Liquid {
 
     public static Milk of(int amount, int temperature) {
         return new Milk(amount, temperature);
+    }
+
+    public static Milk of(int amount, int temperature, boolean foamed) {
+        return new Milk(amount, temperature, foamed);
     }
 
     @Override

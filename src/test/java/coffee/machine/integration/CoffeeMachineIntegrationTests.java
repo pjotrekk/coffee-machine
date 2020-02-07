@@ -88,7 +88,6 @@ public class CoffeeMachineIntegrationTests {
 				.andExpect(status().isPreconditionFailed())
 				.andReturn().getResolvedException();
 
-
 		assertThat(exception).isNotNull()
 				.hasMessageContaining("Insufficient water amount. Only 0ml left. Refill " +
 						"the water tank");

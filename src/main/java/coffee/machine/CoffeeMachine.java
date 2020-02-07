@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @Log4j2
 public class CoffeeMachine {
 
@@ -25,8 +25,6 @@ public class CoffeeMachine {
 
     public Coffee makeCoffee(CoffeeKind coffeeKind) {
         checkContainers(coffeeKind);
-
-        log.info("Making coffee {}", coffeeKind.toString());
 
         Coffee coffee = Coffee.create();
 
