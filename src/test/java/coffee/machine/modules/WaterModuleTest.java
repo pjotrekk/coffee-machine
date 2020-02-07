@@ -39,7 +39,6 @@ class WaterModuleTest {
 
         verify(waterTank, times(1)).getCurrentAmount();
         verify(waterTank, times(1)).isOverflown();
-        verify(waterHeatingModule, times(1)).checkCapacity(waterNeeded);
         verifyNoMoreInteractions(waterTank);
         verifyNoInteractions(waterPump);
     }
@@ -90,7 +89,7 @@ class WaterModuleTest {
         waterModule.prepareWater(waterAmount);
 
         verify(waterPump, times(1)).pump(waterAmount);
-        verify(waterHeatingModule, times(1)).heat(waterAmount);
+        verify(waterHeatingModule, times(1)).heatContent();
         verifyNoMoreInteractions(waterPump, waterHeatingModule);
         verifyNoInteractions(waterTank);
     }

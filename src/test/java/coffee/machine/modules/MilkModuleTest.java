@@ -37,7 +37,6 @@ class MilkModuleTest {
         int milkAmount = 200;
         milkModule.checkMilkContainer(milkAmount);
 
-        verify(milkHeatingModule, times(1)).checkCapacity(milkAmount);
         verifyNoMoreInteractions(milkHeatingModule);
         verifyNoInteractions(milkToHeaterPump, milkToCupPump);
     }
@@ -48,7 +47,7 @@ class MilkModuleTest {
         milkModule.prepareMilk(milkAmount, false);
 
         verify(milkToHeaterPump, times(1)).pump(milkAmount);
-        verify(milkHeatingModule, times(1)).heat(milkAmount);
+        verify(milkHeatingModule, times(1)).heatContent();
         verify(milkToCupPump, times(1)).pump(milkAmount);
         verifyNoMoreInteractions(milkToHeaterPump, milkHeatingModule, milkToCupPump);
         verifyNoInteractions(foamer);
@@ -60,7 +59,7 @@ class MilkModuleTest {
         milkModule.prepareMilk(milkAmount, true);
 
         verify(milkToHeaterPump, times(1)).pump(milkAmount);
-        verify(milkHeatingModule, times(1)).heat(milkAmount);
+        verify(milkHeatingModule, times(1)).heatContent();
         verify(foamer, times(1)).foam(milkAmount);
         verify(milkToCupPump, times(1)).pump(milkAmount);
         verifyNoMoreInteractions(milkToHeaterPump, milkHeatingModule, milkToCupPump, foamer);

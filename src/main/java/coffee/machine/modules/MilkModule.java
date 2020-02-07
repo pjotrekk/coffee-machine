@@ -14,12 +14,11 @@ public class MilkModule {
     private final Foamer foamer;
 
     public void checkMilkContainer(int amountNeeded) {
-        milkHeatingModule.checkCapacity(amountNeeded);
     }
 
     public void prepareMilk(int amount, boolean withFoam) {
         milkToHeaterPump.pump(amount);
-        milkHeatingModule.heat(amount);
+        milkHeatingModule.heatContent();
         if (withFoam) {
             foamer.foam(amount);
         }

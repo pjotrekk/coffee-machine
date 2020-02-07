@@ -17,7 +17,6 @@ public class WaterModule {
     public void checkWaterTank(int amountNeeded) {
         checkForOverflow();
         checkWaterCapacity(amountNeeded);
-        waterHeatingModule.checkCapacity(amountNeeded);
     }
 
     public void prepareWater(int amount) {
@@ -30,7 +29,7 @@ public class WaterModule {
     }
 
     private void heatWater(int amount) {
-        waterHeatingModule.heat(amount);
+        waterHeatingModule.heatContent();
     }
 
     private void checkForOverflow() {
