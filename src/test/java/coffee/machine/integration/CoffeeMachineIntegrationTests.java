@@ -1,11 +1,8 @@
 package coffee.machine.integration;
 
-import coffee.machine.Coffee;
 import coffee.machine.CoffeeMachine;
 import coffee.machine.components.LiquidTank;
 import coffee.machine.components.SolidTank;
-import coffee.machine.ingredients.CoffeeEssence;
-import coffee.machine.ingredients.Milk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +94,6 @@ public class CoffeeMachineIntegrationTests {
 		verifyNoMoreInteractions(coffeeMachine);
 	}
 
-
 	@Test
 	public void shouldNotAcceptCoffeeRequestWithUnknownCoffee() throws Exception {
 		this.mockMvc.perform(get("/coffee")
@@ -105,15 +101,6 @@ public class CoffeeMachineIntegrationTests {
 				.andExpect(status().isBadRequest());
 
 		verifyNoInteractions(coffeeMachine);
-	}
-
-	private Coffee expectedCappuccino() {
-		return Coffee.of(CoffeeEssence.of(CAPPUCCINO.getWaterNeeded(), CAPPUCCINO.getCoffeeNeeded()),
-				Milk.of(CAPPUCCINO.getMilkNeeded(), Milk.PERFECT_TEMPERATURE));
-	}
-
-	private Coffee expectedEspresso() {
-		return Coffee.of(CoffeeEssence.of(ESPRESSO.getWaterNeeded(), ESPRESSO.getCoffeeNeeded()), null);
 	}
 
 }
