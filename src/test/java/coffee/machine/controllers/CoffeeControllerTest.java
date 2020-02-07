@@ -1,6 +1,7 @@
-package coffee.machine;
+package coffee.machine.controllers;
 
-import coffee.machine.controllers.CoffeeController;
+import coffee.machine.CoffeeKind;
+import coffee.machine.CoffeeMachine;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
