@@ -1,8 +1,10 @@
 package coffee.machine.configurations;
 
-import coffee.machine.components.Tank;
-import coffee.machine.components.Heater;
-import coffee.machine.components.Pump;
+import coffee.machine.components.*;
+import coffee.machine.ingredients.CoffeeGrain;
+import coffee.machine.ingredients.CoffeeWastes;
+import coffee.machine.ingredients.Milk;
+import coffee.machine.ingredients.Water;
 import coffee.machine.modules.HeatingModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,67 +13,67 @@ import org.springframework.context.annotation.Configuration;
 public class BeansConfiguration {
 
     @Bean
-    Tank waterTank() {
-        return Tank.of(1500);
+    LiquidTank waterTank() {
+        return LiquidTank.of(Water.create(), 1500);
     }
 
     @Bean
-    Tank milkTank() {
-        return Tank.of(1500);
+    LiquidTank milkTank() {
+        return LiquidTank.of(Milk.create(), 1000);
     }
 
     @Bean
-    Tank coffeeTank() {
-        return Tank.of(1000);
+    SolidTank coffeeTank() {
+        return SolidTank.of(CoffeeGrain.create(), 1200);
     }
 
     @Bean
-    Tank wastesTank() {
-        return Tank.of(1500);
+    SolidTank wastesTank() {
+        return SolidTank.of(CoffeeWastes.create(), 1500);
     }
 
     @Bean
-    Tank waterHeaterTank() {
-        return Tank.of(500);
+    LiquidTank waterHeaterTank() {
+        return LiquidTank.of(Water.create(), 500);
     }
 
     @Bean
-    Tank milkHeaterTank() {
-        return Tank.of(400);
+    LiquidTank milkHeaterTank() {
+        return LiquidTank.of(Milk.create(), 500);
     }
 
     @Bean
-    HeatingModule waterHeatingModule(Tank waterHeaterTank, Heater waterHeater) {
+    HeatingModule waterHeatingModule(LiquidTank waterHeaterTank, Heater waterHeater) {
         return HeatingModule.of(waterHeaterTank, waterHeater);
     }
 
     @Bean
-    HeatingModule milkHeatingModule(Tank milkHeaterTank, Heater milkHeater) {
+    HeatingModule milkHeatingModule(LiquidTank milkHeaterTank, Heater milkHeater) {
         return HeatingModule.of(milkHeaterTank, milkHeater);
     }
 
     @Bean
-    Pump waterToHeaterPump(Tank waterTank, Tank waterHeaterTank) {
+    Pump waterToHeaterPump(LiquidTank waterTank, LiquidTank waterHeaterTank) {
         return Pump.of(waterTank, waterHeaterTank);
     }
 
     @Bean
-    Pump milkToHeaterPump(Tank milkTank, Tank milkHeaterTank) {
+    Pump milkToHeaterPump(LiquidTank milkTank, LiquidTank milkHeaterTank) {
         return Pump.of(milkTank, milkHeaterTank);
     }
 
     @Bean
-    Pump milkHeaterToCupPump(Tank waterTank, Tank waterHeaterTank) {
-        return Pump.of(waterTank, waterHeaterTank);
+    Pump milkHeaterToCupPump(LiquidTank milkTank, LiquidTank milkHeaterTank) {
+        return Pump.of(milkTank, milkHeaterTank);
     }
 
     @Bean
     Heater milkHeater() {
-        return Heater.create(65);
+        return Heater.create(Milk.PERFECT_TEMPERATURE);
     }
 
     @Bean
     Heater waterHeater() {
-        return Heater.create(100);
+        return Heater.create(Water.BOIL_TEMPERATURE);
     }
 }

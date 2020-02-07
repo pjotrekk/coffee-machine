@@ -47,9 +47,9 @@ class TankControllerTest {
                 .andExpect(status().isPayloadTooLarge())
                 .andReturn().getResolvedException();
 
-        assertNotNull(exception);
-        assertThat(exception.getMessage()).contains("Water tank overflow! You should " +
-                "reduce the amount of water to the maximum of 500ml");
+        assertThat(exception).isNotNull()
+                .hasMessageContaining("Water tank overflow! You should reduce the amount" +
+                        " of water to the maximum of 500ml");
 
         verify(tank, times(1)).setCurrentAmount(800);
         verify(tank, times(1)).isOverflown();

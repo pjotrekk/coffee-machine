@@ -2,6 +2,7 @@ package coffee.machine.integration;
 
 import coffee.machine.CoffeeKind;
 import coffee.machine.CoffeeMachine;
+import coffee.machine.components.Tank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -25,10 +25,20 @@ public class CoffeeMachineIntegrationTests {
 	@SpyBean
 	private CoffeeMachine coffeeMachine;
 
+	@Autowired
+	private Tank waterTank;
+
+	@Autowired
+	private Tank coffeeTank;
+
+	@Autowired
+	private Tank milkTank;
+
 	@BeforeEach
-	void setUp() throws Exception {
-		this.mockMvc.perform(put("/tanks/water").param("amount", "1000"));
-		this.mockMvc.perform(put("/tanks/coffee").param("amount", "500"));
+	void setUp() {
+		waterTank.setCurrentAmount(1000);
+		coffeeTank.setCurrentAmount(500);
+		milkTank.setCurrentAmount(500);
 	}
 
 	@Test
