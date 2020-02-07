@@ -31,7 +31,6 @@ public class CoffeeMachine {
         if (coffeeKind.getMilkNeeded() > 0) {
             milkModule.prepareMilk(coffeeKind.getMilkNeeded(), coffeeKind.isWithFoam());
         }
-        coffeeModule.flipUsedCoffee();
     }
 
     private void checkContainers(CoffeeKind coffeeKind) {

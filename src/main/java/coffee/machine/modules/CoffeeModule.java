@@ -2,7 +2,6 @@ package coffee.machine.modules;
 
 import coffee.machine.components.Grounder;
 import coffee.machine.components.Tank;
-import coffee.machine.components.CoffeePot;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor(staticName = "of")
 public class CoffeeModule {
     private final Tank coffeeTank;
-    private final CoffeePot coffeePot;
     private final Grounder grounder;
 
     public void checkCapacity(int amountNeeded) {
@@ -24,14 +22,10 @@ public class CoffeeModule {
         grounder.ground(amount);
     }
 
-    public void flipUsedCoffee() {
-        coffeePot.flip();
-    }
-
     private void checkCoffeeTankOverflow() {
         if (coffeeTank.isOverflown()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    String.format("Tank overflow. Reduce the amount" +
+                    String.format("Coffee tank overflow. Reduce the coffee amount" +
                             " to be below the maximum value of %dmg", coffeeTank.getCapacity()));
         }
     }
@@ -39,7 +33,7 @@ public class CoffeeModule {
     private void checkCoffeeResources(int amountNeeded) {
         if (coffeeTank.getCurrentAmount() < amountNeeded) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    String.format("Insufficient coffee amount. Only %dmg left. You should" +
+                    String.format("Insufficient coffee amount. Only %dmg left. You should " +
                                     "refill the coffee tank", coffeeTank.getCurrentAmount()));
         }
     }
