@@ -1,10 +1,8 @@
 package coffee.machine.ingredients;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-@EqualsAndHashCode(callSuper = false)
 public class Milk extends Ingredient<Milk> {
 
     public static final int PERFECT_TEMPERATURE = 65;

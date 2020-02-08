@@ -1,17 +1,12 @@
 package coffee.machine.ingredients;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@EqualsAndHashCode(callSuper = false)
+@Getter
 public class Water extends Ingredient<Water> {
 
-    public static final int BOIL_TEMPERATURE = 100;
-
-    @Getter
     private int temperature = ROOM_TEMPERATURE;
 
-    @Getter
     private boolean evaporated = false;
 
     @Override

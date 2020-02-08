@@ -1,10 +1,8 @@
 package coffee.machine.ingredients;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-@EqualsAndHashCode(callSuper = false)
 public class CoffeeGrain extends Ingredient<CoffeeGrain> {
 
     private boolean grounded = false;
