@@ -1,6 +1,9 @@
 package coffee.machine.integration;
 
 import coffee.machine.components.Tank;
+import coffee.machine.ingredients.CoffeeGrain;
+import coffee.machine.ingredients.Milk;
+import coffee.machine.ingredients.Water;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +22,16 @@ public class TanksIntegrationTests {
     private MockMvc mockMvc;
 
     @Autowired
-    private Tank waterTank;
+    private Tank<Water> waterTank;
 
     @Autowired
-    private Tank wastesTank;
+    private Tank<CoffeeGrain> wastesTank;
 
     @Autowired
-    private Tank milkTank;
+    private Tank<Milk> milkTank;
 
     @Autowired
-    private Tank coffeeTank;
+    private Tank<CoffeeGrain> coffeeTank;
 
     @BeforeEach
     void setUp() {
