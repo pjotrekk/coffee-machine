@@ -1,41 +1,57 @@
 # Assumptions:
 ### Tanks:
-Tanks return fixed values because the real ones would be able to calculate the weight on the fly.
-If I would manipulate those values programatically there could be a situation where
-Coffee Machine set some value and the user refilled/emptied the tank and the value in the
-program would become inappropriate. So it's better to weigh the content each time we want to use
-the containers.
+Tanks contain an ingredient. They can be modified by setting/adding a new amount
+or by acquiring an element. This replaces pumps that added no functionality to the
+program.
 
-### Pumps:
-In my coffee machine pumps mindlessly start pumping when they are asked to.
-They depend on validation checks and want to have pipes connected properly.
-They know how long they should work to transfer given amount of liquid.
+### Ingredients:
+Ingredients can be mutated only by splitting them. They return a new object with
+asked amount and subtract their one.
 
 ### Heater:
-Heater heats the water until it evaporates. The steam comes through the coffee pot, gets
-the essence of the coffee and condenses directly to the user's cup.
+Heater returns heated object. Used only for milk.
+
+### Evaporator:
+It evaporates water and returns steam (water with evaporated set to true)
 
 ### Grounder:
-Grounder grounds the coffee directly to the coffee pot. The internet says the coffee should't
-be flattened, just lay as it was poured.
+Grounder returns grounded coffee (coffee grain with grounded set to true)
 
 ### Pot:
-The coffee pot stores the coffee while the heater evaporates water through it and
-is able to flip, which removes used coffee to the wastes tank.
+The coffee pot takes grounded coffee and steam and combines them to the coffee
+essence (water with a coffee extract)
 
 ### Milk Module
-Most of coffee machines I've seen didn't have any milk container - there was a pipe that was
-put into a glass or a carton and it mindlessly tried to pump the milk. I simulated this behaviour.
-Otherwise I could do exactly as in the water module.
+It can check whether its tank has a proper amount of milk or whether is overflown
+and prepare heated and foamed milk.
+
+### Water Module
+It can check whether its tank has a proper amount of water or whether is overflown
+and prepare steam needed to flush it through coffee pot in coffee module.
+
+### Coffee Module
+It can check whether its tank has a proper amount of coffee or whether is overflown,
+ground coffee needed by coffee pot and accept steam and that coffee to prepare
+coffee essence
+
+### Wastes Module
+It can only check whether it is full. 
 
 # How to run
 In Intellij:
 Install lombok plugin
 Run CoffeeMachineApplication
 
-Use POST requests on http://localhost:8086/coffee with param coffeeKind where
+Use GET requests on http://localhost:8086/coffee with param coffeeKind where
 CoffeeKind = { "Americano", "Espresso", "Latte", "Cappuccino" } - the capitalization doesn't matter.
 
-## Comments
-This task could be done without Spring, but I wanted to use it as it's a recruitment task and most 
-of Java projects are done with it.
+The return value is in the form:
+```
+{
+  water: <int>,
+  coffeeExtract: <int>,
+  milk: <int>,
+  withFoam: <boolean>
+}
+```
+
