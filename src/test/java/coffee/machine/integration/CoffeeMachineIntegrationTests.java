@@ -101,6 +101,7 @@ public class CoffeeMachineIntegrationTests {
 		Exception exception = this.mockMvc.perform(get("/coffee")
 				.param("coffeeKind", "Latte"))
 				.andExpect(status().isPreconditionFailed())
+				.andExpect(jsonPath("$").doesNotExist())
 				.andReturn().getResolvedException();
 
 		assertThat(exception).isNotNull()
@@ -121,7 +122,8 @@ public class CoffeeMachineIntegrationTests {
 	public void shouldNotAcceptCoffeeRequestWithUnknownCoffee() throws Exception {
 		this.mockMvc.perform(get("/coffee")
 				.param("coffeeKind", "Unknown"))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$").doesNotExist());
 
 		assertThat(wastesTank.getCurrentAmount()).isEqualTo(0);
 		assertThat(waterTank.getCurrentAmount()).isEqualTo(250);
