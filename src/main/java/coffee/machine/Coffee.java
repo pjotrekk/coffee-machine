@@ -1,7 +1,5 @@
 package coffee.machine;
 
-import coffee.machine.ingredients.CoffeeEssence;
-import coffee.machine.ingredients.Milk;
 import lombok.*;
 
 @NoArgsConstructor(staticName = "create")
@@ -9,6 +7,8 @@ import lombok.*;
 @Getter @Setter
 @EqualsAndHashCode
 public class Coffee {
-    private CoffeeEssence coffeeEssence;
-    private Milk milk;
+    private int water = 0;
+    private int coffeeExtract = 0;
+    private int milk = 0;
+    private boolean withFoam = false;
 }

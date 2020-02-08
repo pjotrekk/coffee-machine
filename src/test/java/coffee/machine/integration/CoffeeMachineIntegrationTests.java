@@ -55,10 +55,10 @@ public class CoffeeMachineIntegrationTests {
 		this.mockMvc.perform(get("/coffee")
 				.param("coffeeKind", "Cappuccino"))
 				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.coffeeEssence.amount").value(150))
-				.andExpect(jsonPath("$.coffeeEssence.coffeeExtract").value(20))
-				.andExpect(jsonPath("$.milk.foamed").value(true))
-				.andExpect(jsonPath("$.milk.amount").value(150));
+				.andExpect(jsonPath("$.water").value(150))
+				.andExpect(jsonPath("$.coffeeExtract").value(20))
+				.andExpect(jsonPath("$.withFoam").value(true))
+				.andExpect(jsonPath("$.milk").value(150));
 
 		assertThat(wastesTank.getCurrentAmount()).isEqualTo(20);
 		assertThat(waterTank.getCurrentAmount()).isEqualTo(100);
@@ -74,9 +74,10 @@ public class CoffeeMachineIntegrationTests {
 		this.mockMvc.perform(get("/coffee")
 				.param("coffeeKind", "Espresso"))
 				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.coffeeEssence.amount").value(50))
-				.andExpect(jsonPath("$.coffeeEssence.coffeeExtract").value(40))
-				.andExpect(jsonPath("$.milk").doesNotExist());
+				.andExpect(jsonPath("$.water").value(50))
+				.andExpect(jsonPath("$.coffeeExtract").value(40))
+				.andExpect(jsonPath("$.withFoam").value(false))
+				.andExpect(jsonPath("$.milk").value(0));
 
 		assertThat(wastesTank.getCurrentAmount()).isEqualTo(40);
 		assertThat(waterTank.getCurrentAmount()).isEqualTo(200);
@@ -92,9 +93,10 @@ public class CoffeeMachineIntegrationTests {
 		this.mockMvc.perform(get("/coffee")
 				.param("coffeeKind", "Americano"))
 				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.coffeeEssence.amount").value(250))
-				.andExpect(jsonPath("$.coffeeEssence.coffeeExtract").value(40))
-				.andExpect(jsonPath("$.milk").doesNotExist());
+				.andExpect(jsonPath("$.water").value(250))
+				.andExpect(jsonPath("$.coffeeExtract").value(40))
+				.andExpect(jsonPath("$.withFoam").value(false))
+				.andExpect(jsonPath("$.milk").value(0));
 
 		Exception exception = this.mockMvc.perform(get("/coffee")
 				.param("coffeeKind", "Latte"))

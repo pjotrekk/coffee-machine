@@ -36,11 +36,13 @@ public class CoffeeMachine {
 
         CoffeeEssence coffeeEssence = coffeeModule.pushSteamThroughGroundedCoffee(steam, groundedCoffee);
 
-        coffee.setCoffeeEssence(coffeeEssence);
+        coffee.setWater(coffeeEssence.getAmount());
+        coffee.setCoffeeExtract(coffeeEssence.getCoffeeExtract());
 
         if (coffeeKind.getMilkNeeded() > 0) {
             Milk milk = milkModule.prepareMilk(coffeeKind.getMilkNeeded(), coffeeKind.isWithFoam());
-            coffee.setMilk(milk);
+            coffee.setMilk(milk.getAmount());
+            coffee.setWithFoam(milk.isFoamed());
         }
 
         return coffee;

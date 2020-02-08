@@ -55,7 +55,7 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.AMERICANO.getMilkNeeded();
 
-        Coffee expected = Coffee.of(testCoffeeEssence, null);
+        Coffee expected = Coffee.of(testCoffeeEssence.getAmount(), testCoffeeEssence.getCoffeeExtract(), 0, false);
 
         Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.AMERICANO);
 
@@ -79,7 +79,8 @@ class CoffeeMachineTest {
 
         given(milkModule.prepareMilk(anyInt(), anyBoolean())).willReturn(testMilk);
 
-        Coffee expected = Coffee.of(testCoffeeEssence, testMilk);
+        Coffee expected = Coffee.of(testCoffeeEssence.getAmount(), testCoffeeEssence.getCoffeeExtract(),
+                testMilk.getAmount(), testMilk.isFoamed());
 
         Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.LATTE);
 
