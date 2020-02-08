@@ -1,17 +1,40 @@
 package coffee.machine.ingredients;
 
-public class Water extends Liquid {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+@EqualsAndHashCode(callSuper = false)
+public class Water extends Ingredient<Water> {
 
     public static final int BOIL_TEMPERATURE = 100;
 
-    public Water() {}
+    @Getter
+    private int temperature = ROOM_TEMPERATURE;
 
-    public Water(int amount) {
+    @Getter
+    private boolean evaporated = false;
+
+    @Override
+    protected Water self() {
+        return this;
+    }
+
+    @Override
+    public Water newInstance(int amount) {
+        return Water.of(amount, temperature, evaporated);
+    }
+
+    public Water() {
+    }
+
+    private Water(int amount) {
         super(amount);
     }
 
-    private Water(int amount, int temperature) {
-        super(amount, temperature);
+    private Water(int amount, int temperature, boolean evaporated) {
+        super(amount);
+        this.temperature = temperature;
+        this.evaporated = evaporated;
     }
 
     public static Water create() {
@@ -22,12 +45,8 @@ public class Water extends Liquid {
         return new Water(amount);
     }
 
-    public static Water of(int amount, int temperature) {
-        return new Water(amount, temperature);
+    public static Water of(int amount, int temperature, boolean evaporated) {
+        return new Water(amount, temperature, evaporated);
     }
 
-    @Override
-    public Water newInstance() {
-        return Water.create();
-    }
 }

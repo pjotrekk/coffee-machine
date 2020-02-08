@@ -1,8 +1,7 @@
 package coffee.machine.components;
 
 import coffee.machine.ingredients.CoffeeEssence;
-import coffee.machine.ingredients.CoffeeWastes;
-import coffee.machine.ingredients.GroundedCoffee;
+import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Water;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,34 +10,34 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(staticName = "of")
 public class CoffeePot {
 
-    private final GroundedCoffee groundedCoffee = GroundedCoffee.of(0);
+    private final Tank<CoffeeGrain> wastesTank;
 
-    private final CoffeeWastes coffeeWastes = CoffeeWastes.of(0);
+    public CoffeeEssence combineSteamAndGroundedCoffee(Water steam, CoffeeGrain groundedCoffee) {
+        checkWaterEvaporated(steam);
+        checkCoffeeGrounded(groundedCoffee);
+        checkCoffeeNotUsed(groundedCoffee);
 
-    private final SolidTank wastesTank;
-
-    public CoffeeEssence combineSteamAndGroundedCoffee(Water steam) {
-        int coffeeAmount = groundedCoffee.getAmount();
-        coffeeWastes.addAmount(coffeeAmount);
-        groundedCoffee.setAmount(0);
-        flip();
-        return CoffeeEssence.of(steam.getAmount(), coffeeAmount);
+        CoffeeEssence coffeeEssence = CoffeeEssence.of(steam.getAmount(), groundedCoffee.getAmount());
+        wastesTank.addAmount(groundedCoffee.getAmount());
+        return coffeeEssence;
     }
 
-    public void addGroundedCoffee(int amount) {
-        groundedCoffee.addAmount(amount);
+    private void checkCoffeeGrounded(CoffeeGrain groundedCoffee) {
+        if (!groundedCoffee.isGrounded()) {
+            throw new AssertionError("Coffee in coffee pot is not grounded");
+        }
     }
 
-    public int getGroundedCoffeeAmount() {
-        return groundedCoffee.getAmount();
+    private void checkCoffeeNotUsed(CoffeeGrain groundedCoffee) {
+        if (groundedCoffee.isUsed()) {
+            throw new AssertionError("Coffee in coffee pot has already been used");
+        }
     }
 
-    public int getCoffeeWastesAmount() {
-        return coffeeWastes.getAmount();
+    private void checkWaterEvaporated(Water steam) {
+        if (!steam.isEvaporated()) {
+            throw new AssertionError("Water in coffee pot is not evaporated");
+        }
     }
 
-    private void flip() {
-        wastesTank.addAmount(coffeeWastes.getAmount());
-        coffeeWastes.setAmount(0);
-    }
 }

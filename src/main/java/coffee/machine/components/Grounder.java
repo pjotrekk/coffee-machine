@@ -1,19 +1,22 @@
 package coffee.machine.components;
 
-import lombok.RequiredArgsConstructor;
+import coffee.machine.ingredients.CoffeeGrain;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor(staticName = "of")
+@NoArgsConstructor(staticName = "create")
 public class Grounder {
 
-    private final SolidTank coffeeTank;
+    public CoffeeGrain ground(CoffeeGrain coffeeGrain) {
+        checkCoffeeGrainGrounded(coffeeGrain);
+        return CoffeeGrain.of(coffeeGrain.getAmount(), true, coffeeGrain.isUsed());
+    }
 
-    private final CoffeePot coffeePot;
-
-    public void ground(int amount) {
-        coffeeTank.reduceAmount(amount);
-        coffeePot.addGroundedCoffee(amount);
+    private void checkCoffeeGrainGrounded(CoffeeGrain coffeeGrain) {
+        if (coffeeGrain.isGrounded()) {
+            throw new AssertionError("Coffee grain already grounded");
+        }
     }
 
 }

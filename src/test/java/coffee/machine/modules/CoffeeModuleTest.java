@@ -1,7 +1,9 @@
 package coffee.machine.modules;
 
+import coffee.machine.components.CoffeePot;
 import coffee.machine.components.Grounder;
 import coffee.machine.components.Tank;
+import coffee.machine.ingredients.CoffeeGrain;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,20 +20,23 @@ import static org.mockito.Mockito.*;
 class CoffeeModuleTest {
 
     @Mock
-    private Tank coffeeTank;
+    private Tank<CoffeeGrain> coffeeTank;
 
     @Mock
     private Grounder grounder;
+
+    @Mock
+    private CoffeePot coffeePot;
 
     @InjectMocks
     private CoffeeModule coffeeModule;
 
     @Test
     void shouldPassCapacityCheck() {
-        int coffeeNeeded = 20;
         given(coffeeTank.getCurrentAmount()).willReturn(500);
+        given(coffeeTank.isOverflown()).willReturn(false);
 
-        coffeeModule.checkCapacity(coffeeNeeded);
+        coffeeModule.checkCapacity(20);
 
         verify(coffeeTank, times(1)).getCurrentAmount();
         verify(coffeeTank, times(1)).isOverflown();
@@ -80,12 +85,17 @@ class CoffeeModuleTest {
 
     @Test
     void shouldCallGrounder() {
-        int coffeeAmount = 20;
-        coffeeModule.ground(coffeeAmount);
+        int amountAcquired = 20;
+        CoffeeGrain coffeeGrain = CoffeeGrain.of(amountAcquired, false, false);
 
-        verify(grounder, times(1)).ground(coffeeAmount);
-        verifyNoMoreInteractions(grounder);
-        verifyNoInteractions(coffeeTank);
+        given(coffeeTank.acquire(anyInt())).willReturn(coffeeGrain);
+        given(grounder.ground(any())).willReturn(coffeeGrain);
+
+        coffeeModule.ground(amountAcquired);
+
+        verify(coffeeTank, times(1)).acquire(amountAcquired);
+        verify(grounder, times(1)).ground(coffeeGrain);
+        verifyNoMoreInteractions(grounder, coffeeTank);
     }
 
 }

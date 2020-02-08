@@ -1,31 +1,30 @@
 package coffee.machine.components;
 
 import coffee.machine.ingredients.CoffeeGrain;
-import coffee.machine.ingredients.CoffeeWastes;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GrounderTest {
 
-    private SolidTank coffeeTank;
+    private Grounder grounder = Grounder.create();
 
-    private CoffeePot coffeePot;
+    @Test
+    void shouldReturnGroundedCoffee() {
+        CoffeeGrain coffeeGrain = CoffeeGrain.of(50, false, false);
+        CoffeeGrain groundedCoffee = grounder.ground(coffeeGrain);
 
-    private Grounder grounder;
-
-    @BeforeEach
-    void setUp() {
-        coffeeTank = SolidTank.of(CoffeeGrain.of(50), 200);
-        coffeePot = CoffeePot.of(SolidTank.of(CoffeeWastes.of(0), 300));
-        grounder = Grounder.of(coffeeTank, coffeePot);
+        assertThat(groundedCoffee.getAmount()).isEqualTo(coffeeGrain.getAmount());
+        assertThat(groundedCoffee.isGrounded()).isTrue();
     }
 
     @Test
-    void shouldSubtractItsCoffeeGrainAndIncreaseGroundedCoffeeInPot() {
-        grounder.ground(30);
-        assertThat(coffeeTank.getCurrentAmount()).isEqualTo(20);
-        assertThat(coffeePot.getGroundedCoffeeAmount()).isEqualTo(30);
+    void shouldNotGroundAlreadyGroundedCoffee() {
+        CoffeeGrain coffeeGrain = CoffeeGrain.of(50, true, false);
+
+        AssertionError error = assertThrows(AssertionError.class, () -> grounder.ground(coffeeGrain));
+
+        assertThat(error).isNotNull().hasMessageContaining("Coffee grain already grounded");
     }
 }

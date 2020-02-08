@@ -1,9 +1,7 @@
 package coffee.machine.modules;
 
-import coffee.machine.components.CoffeePot;
-import coffee.machine.components.Pump;
+import coffee.machine.components.Evaporator;
 import coffee.machine.components.Tank;
-import coffee.machine.ingredients.CoffeeEssence;
 import coffee.machine.ingredients.Water;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,32 +11,17 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 @AllArgsConstructor(staticName = "of")
 public class WaterModule {
-    private final Tank waterTank;
-    private final Pump waterToHeaterPump;
-    private final HeatingModule waterHeatingModule;
-    private final CoffeePot coffeePot;
+    private final Tank<Water> waterTank;
+    private final Evaporator evaporator;
 
     public void checkWaterTank(int amountNeeded) {
         checkForOverflow();
         checkWaterCapacity(amountNeeded);
     }
 
-    public CoffeeEssence prepareTheEssence(int amount) {
-        moveWaterToHeater(amount);
-        Water steam = evaporateWater();
-        return pushSteamThroughCoffeePot(steam);
-    }
-
-    private CoffeeEssence pushSteamThroughCoffeePot(Water steam) {
-        return coffeePot.combineSteamAndGroundedCoffee(steam);
-    }
-
-    private void moveWaterToHeater(int amount) {
-        waterToHeaterPump.pump(amount);
-    }
-
-    private Water evaporateWater() {
-        return (Water) waterHeatingModule.heatContent();
+    public Water prepareSteam(int amount) {
+        Water water = waterTank.acquire(amount);
+        return evaporator.evaporate(water);
     }
 
     private void checkForOverflow() {

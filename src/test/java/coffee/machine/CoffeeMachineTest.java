@@ -1,11 +1,14 @@
 package coffee.machine;
 
 import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Milk;
+import coffee.machine.ingredients.Water;
 import coffee.machine.modules.CoffeeModule;
 import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -35,56 +37,49 @@ class CoffeeMachineTest {
     @InjectMocks
     private CoffeeMachine coffeeMachine;
 
-    @Test
-    void shouldUseProperModulesToMakeAmericano() {
-        int waterNeeded = CoffeeKind.AMERICANO.getWaterNeeded();
-        int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
-        int milkNeeded = CoffeeKind.AMERICANO.getMilkNeeded();
-        Coffee expected = Coffee.of(CoffeeEssence.of(waterNeeded, coffeeNeeded), null);
+    private Water testWater = Water.of(200, 23, false);
+    private Milk testMilk = Milk.of(100, 23, false);
+    private CoffeeGrain testCoffeeGrain = CoffeeGrain.of(20, false, false);
+    private CoffeeEssence testCoffeeEssence = CoffeeEssence.of(200, 20);
 
-        given(waterModule.prepareTheEssence(waterNeeded)).willReturn(CoffeeEssence.of(waterNeeded, coffeeNeeded));
-
-        Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.AMERICANO);
-
-        assertEquals(expected, coffee);
-
-        checkModules(waterNeeded, coffeeNeeded, milkNeeded);
-        verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
-        verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
+    @BeforeEach
+    void setUp() {
+        given(waterModule.prepareSteam(anyInt())).willReturn(testWater);
+        given(coffeeModule.ground(anyInt())).willReturn(testCoffeeGrain);
+        given(coffeeModule.pushSteamThroughGroundedCoffee(any(), any())).willReturn(testCoffeeEssence);
     }
 
     @Test
-    void shouldUseProperModulesToMakeEspresso() {
-        int waterNeeded = CoffeeKind.ESPRESSO.getWaterNeeded();
-        int coffeeNeeded = CoffeeKind.ESPRESSO.getCoffeeNeeded();
-        int milkNeeded = CoffeeKind.ESPRESSO.getMilkNeeded();
-        Coffee expected = Coffee.of(CoffeeEssence.of(waterNeeded, coffeeNeeded), null);
+    void shouldUseProperModulesToMakeBlackCoffee() {
+        int waterNeeded = CoffeeKind.AMERICANO.getWaterNeeded();
+        int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
+        int milkNeeded = CoffeeKind.AMERICANO.getMilkNeeded();
 
-        given(waterModule.prepareTheEssence(anyInt())).willReturn(CoffeeEssence.of(waterNeeded, coffeeNeeded));
+        Coffee expected = Coffee.of(testCoffeeEssence, null);
 
-        Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.ESPRESSO);
+        Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.AMERICANO);
 
         assertThat(coffee).isEqualTo(expected);
 
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
+        verify(coffeeModule, times(1))
+                .pushSteamThroughGroundedCoffee(testWater, testCoffeeGrain);
+        verify(waterModule, times(1)).prepareSteam(waterNeeded);
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
     }
 
+
     @Test
-    void shouldUseProperModulesToMakeLatte() {
+    void shouldUseProperModulesToMakeWhiteCoffee() {
         int waterNeeded = CoffeeKind.LATTE.getWaterNeeded();
         int coffeeNeeded = CoffeeKind.LATTE.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.LATTE.getMilkNeeded();
         boolean withFoam = CoffeeKind.LATTE.isWithFoam();
-        Coffee expected = Coffee.of(CoffeeEssence.of(waterNeeded, coffeeNeeded),
-                Milk.of(milkNeeded, Milk.PERFECT_TEMPERATURE, false));
 
-        given(waterModule.prepareTheEssence(anyInt())).willReturn(CoffeeEssence.of(waterNeeded, coffeeNeeded));
-        given(milkModule.prepareMilk(anyInt(), anyBoolean()))
-                .willReturn(Milk.of(milkNeeded, Milk.PERFECT_TEMPERATURE, false));
+        given(milkModule.prepareMilk(anyInt(), anyBoolean())).willReturn(testMilk);
+
+        Coffee expected = Coffee.of(testCoffeeEssence, testMilk);
 
         Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.LATTE);
 
@@ -92,31 +87,9 @@ class CoffeeMachineTest {
 
         checkModules(waterNeeded, coffeeNeeded, milkNeeded);
         verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
-        verify(milkModule, times(1)).prepareMilk(milkNeeded, withFoam);
-        verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
-    }
-
-    @Test
-    void shouldUseProperModulesToMakeCappuccino() {
-        int waterNeeded = CoffeeKind.CAPPUCCINO.getWaterNeeded();
-        int coffeeNeeded = CoffeeKind.CAPPUCCINO.getCoffeeNeeded();
-        int milkNeeded = CoffeeKind.CAPPUCCINO.getMilkNeeded();
-        boolean withFoam = CoffeeKind.CAPPUCCINO.isWithFoam();
-        Coffee expected = Coffee.of(CoffeeEssence.of(waterNeeded, coffeeNeeded),
-                Milk.of(milkNeeded, Milk.PERFECT_TEMPERATURE, true));
-
-        given(waterModule.prepareTheEssence(anyInt())).willReturn(CoffeeEssence.of(waterNeeded, coffeeNeeded));
-        given(milkModule.prepareMilk(anyInt(), anyBoolean()))
-                .willReturn(Milk.of(milkNeeded, Milk.PERFECT_TEMPERATURE, true));
-
-        Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.CAPPUCCINO);
-
-        assertThat(coffee).isEqualTo(expected);
-
-        checkModules(waterNeeded, coffeeNeeded, milkNeeded);
-        verify(coffeeModule, times(1)).ground(coffeeNeeded);
-        verify(waterModule, times(1)).prepareTheEssence(waterNeeded);
+        verify(coffeeModule, times(1))
+                .pushSteamThroughGroundedCoffee(testWater, testCoffeeGrain);
+        verify(waterModule, times(1)).prepareSteam(waterNeeded);
         verify(milkModule, times(1)).prepareMilk(milkNeeded, withFoam);
         verifyNoMoreInteractions(waterModule, coffeeModule, wastesModule, milkModule);
     }

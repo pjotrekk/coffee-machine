@@ -1,33 +1,68 @@
 package coffee.machine.components;
 
 import coffee.machine.ingredients.CoffeeEssence;
-import coffee.machine.ingredients.CoffeeWastes;
+import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Water;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CoffeePotTest {
-    private CoffeeWastes coffeeWastes;
-    private SolidTank wastesTank;
+
+    private Tank<CoffeeGrain> wastesTank;
+
     private CoffeePot coffeePot;
 
     @BeforeEach
     void setUp() {
-        coffeeWastes = CoffeeWastes.of(40);
-        wastesTank = SolidTank.of(coffeeWastes, 200);
+        wastesTank = new Tank<>(CoffeeGrain.create(), 300);
         coffeePot = CoffeePot.of(wastesTank);
     }
 
     @Test
-    void shouldCreateCoffeeEssenceAndRemoveItsWastes() {
-        coffeePot.addGroundedCoffee(30);
-        CoffeeEssence essence = coffeePot.combineSteamAndGroundedCoffee(Water.of(100, 20));
+    void shouldCreateCoffeeEssenceAndRemoveUsedCoffeeToWastesTank() {
+        Water steam = Water.of(100, 100, true);
+        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true, false);
+
+        CoffeeEssence essence = coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee);
+
         assertThat(essence.getAmount()).isEqualTo(100);
-        assertThat(essence.getCoffeeExtract()).isEqualTo(30);
-        assertThat(wastesTank.getCurrentAmount()).isEqualTo(70);
-        assertThat(coffeePot.getGroundedCoffeeAmount()).isEqualTo(0);
-        assertThat(coffeePot.getCoffeeWastesAmount()).isEqualTo(0);
+        assertThat(essence.getCoffeeExtract()).isEqualTo(50);
+        assertThat(wastesTank.getCurrentAmount()).isEqualTo(50);
+    }
+
+    @Test
+    void shouldFailOnWaterNotEvaporated() {
+        Water steam = Water.of(100, 100, false);
+        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true, false);
+
+        AssertionError error = assertThrows(AssertionError.class, () ->
+                coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee));
+
+        assertThat(error).isNotNull().hasMessageContaining("Water in coffee pot is not evaporated");
+    }
+
+    @Test
+    void shouldFailOnCoffeeGrainNotGrounded() {
+        Water steam = Water.of(100, 100, true);
+        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, false, false);
+
+        AssertionError error = assertThrows(AssertionError.class, () ->
+                coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee));
+
+        assertThat(error).isNotNull().hasMessageContaining("Coffee in coffee pot is not grounded");
+    }
+
+    @Test
+    void shouldFailOnCoffeeGrainUsed() {
+        Water steam = Water.of(100, 100, true);
+        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true, true);
+
+        AssertionError error = assertThrows(AssertionError.class, () ->
+                coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee));
+
+        assertThat(error).isNotNull().hasMessageContaining("Coffee in coffee pot has already been used");
     }
 }

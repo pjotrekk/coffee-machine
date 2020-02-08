@@ -1,7 +1,11 @@
 package coffee.machine.modules;
 
+import coffee.machine.components.CoffeePot;
 import coffee.machine.components.Grounder;
 import coffee.machine.components.Tank;
+import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.ingredients.CoffeeGrain;
+import coffee.machine.ingredients.Water;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -10,16 +14,22 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 @AllArgsConstructor(staticName = "of")
 public class CoffeeModule {
-    private final Tank coffeeTank;
+    private final Tank<CoffeeGrain> coffeeTank;
     private final Grounder grounder;
+    private final CoffeePot coffeePot;
 
     public void checkCapacity(int amountNeeded) {
         checkCoffeeTankOverflow();
         checkCoffeeResources(amountNeeded);
     }
 
-    public void ground(int amount) {
-        grounder.ground(amount);
+    public CoffeeGrain ground(int amount) {
+        CoffeeGrain coffeeGrain = coffeeTank.acquire(amount);
+        return grounder.ground(coffeeGrain);
+    }
+
+    public CoffeeEssence pushSteamThroughGroundedCoffee(Water steam, CoffeeGrain groundedCoffee) {
+        return coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee);
     }
 
     private void checkCoffeeTankOverflow() {

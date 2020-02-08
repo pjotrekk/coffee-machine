@@ -1,8 +1,8 @@
 package coffee.machine.modules;
 
 import coffee.machine.components.Foamer;
-import coffee.machine.components.LiquidTank;
-import coffee.machine.components.Pump;
+import coffee.machine.components.Heater;
+import coffee.machine.components.Tank;
 import coffee.machine.ingredients.Milk;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,9 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 @AllArgsConstructor(staticName = "of")
 public class MilkModule {
-    private final LiquidTank milkTank;
-    private final HeatingModule milkHeatingModule;
-    private final Pump milkToHeaterPump;
+    private final Tank<Milk> milkTank;
+    private final Heater milkHeater;
     private final Foamer foamer;
 
     public void checkMilkTank(int amountNeeded) {
@@ -23,16 +22,12 @@ public class MilkModule {
     }
 
     public Milk prepareMilk(int amount, boolean withFoam) {
-        moveMilkToHeater(amount);
-        Milk hotMilk = (Milk) milkHeatingModule.heatContent();
+        Milk milk = milkTank.acquire(amount);
+        Milk hotMilk = milkHeater.heat(milk);
         if (withFoam) {
-            foamer.foam(hotMilk);
+            hotMilk = foamer.foam(hotMilk);
         }
         return hotMilk;
-    }
-
-    private void moveMilkToHeater(int amount) {
-        milkToHeaterPump.pump(amount);
     }
 
     private void checkForOverflow() {

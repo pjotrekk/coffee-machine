@@ -1,6 +1,9 @@
 package coffee.machine.controllers;
 
 import coffee.machine.components.Tank;
+import coffee.machine.ingredients.CoffeeGrain;
+import coffee.machine.ingredients.Milk;
+import coffee.machine.ingredients.Water;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,10 +16,10 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/tanks")
 @AllArgsConstructor
 public class TankController {
-    private final Tank waterTank;
-    private final Tank coffeeTank;
-    private final Tank wastesTank;
-    private final Tank milkTank;
+    private final Tank<Water> waterTank;
+    private final Tank<CoffeeGrain> coffeeTank;
+    private final Tank<CoffeeGrain> wastesTank;
+    private final Tank<Milk> milkTank;
 
     @PutMapping("/water")
     public void refillWater(@RequestParam(name = "amount") int amount) {

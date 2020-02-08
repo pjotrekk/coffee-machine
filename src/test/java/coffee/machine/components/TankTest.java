@@ -1,7 +1,6 @@
 package coffee.machine.components;
 
-import coffee.machine.ingredients.CoffeeGrain;
-import coffee.machine.ingredients.Milk;
+import coffee.machine.ingredients.Water;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TankTest {
 
-    Tank tank;
+    Water water = Water.of(200, 23, false);
+    Tank<Water> tank;
 
     @BeforeEach
     void setUp() {
-        tank = SolidTank.of(CoffeeGrain.of(200), 500);
+        tank = new Tank<>(water, 500);
     }
 
     @Test
@@ -32,17 +32,21 @@ class TankTest {
     }
 
     @Test
-    void shouldReduceAmount() {
-        tank.reduceAmount(100);
-        assertEquals(100, tank.getCurrentAmount());
+    void shouldSplitItsIngredient() {
+        Water splitted = tank.acquire(100);
+
+        assertEquals(100, splitted.getAmount());
+        assertFalse(splitted.isEvaporated());
+        assertEquals(water.getTemperature(), splitted.getTemperature());
+
+        assertEquals(100, water.getAmount());
     }
 
     @Test
-    void shouldNotAllowToReduceBelowZero() {
-        int exceededAmount = tank.getCurrentAmount() + 1;
-        AssertionError error = assertThrows(AssertionError.class, () -> tank.reduceAmount(exceededAmount));
+    void shouldNotAllowToAcquireMoreThanIngredientAmount() {
+        AssertionError error = assertThrows(AssertionError.class, () -> tank.acquire(300));
 
-        assertThat(error).isNotNull().hasMessageContaining("Cannot reduce the tank's ingredient amount below zero");
+        assertThat(error).isNotNull().hasMessageContaining("Insufficient amount in tank");
     }
 
     @Test
@@ -52,9 +56,4 @@ class TankTest {
         assertThat(error).isNotNull().hasMessageContaining("Amount cannot be below zero");
     }
 
-    @Test
-    void shouldReturnProperIngredientType() {
-        Tank tank = LiquidTank.of(Milk.create(), 100);
-        assertThat(tank.getIngredient()).isInstanceOf(Milk.class);
-    }
 }

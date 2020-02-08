@@ -1,8 +1,10 @@
 package coffee.machine.integration;
 
 import coffee.machine.CoffeeMachine;
-import coffee.machine.components.LiquidTank;
-import coffee.machine.components.SolidTank;
+import coffee.machine.components.Tank;
+import coffee.machine.ingredients.CoffeeGrain;
+import coffee.machine.ingredients.Milk;
+import coffee.machine.ingredients.Water;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +31,23 @@ public class CoffeeMachineIntegrationTests {
 	private CoffeeMachine coffeeMachine;
 
 	@Autowired
-	private LiquidTank waterTank;
+	private Tank<Water> waterTank;
 
 	@Autowired
-	private LiquidTank milkTank;
+	private Tank<Milk> milkTank;
 
 	@Autowired
-	private SolidTank coffeeTank;
+	private Tank<CoffeeGrain> coffeeTank;
+
+	@Autowired
+	private Tank<CoffeeGrain> wastesTank;
 
 	@BeforeEach
 	void setUp() {
 		waterTank.setCurrentAmount(250);
 		milkTank.setCurrentAmount(200);
 		coffeeTank.setCurrentAmount(150);
+		wastesTank.setCurrentAmount(0);
 	}
 
 	@Test
@@ -53,6 +59,11 @@ public class CoffeeMachineIntegrationTests {
 				.andExpect(jsonPath("$.coffeeEssence.coffeeExtract").value(20))
 				.andExpect(jsonPath("$.milk.foamed").value(true))
 				.andExpect(jsonPath("$.milk.amount").value(150));
+
+		assertThat(wastesTank.getCurrentAmount()).isEqualTo(20);
+		assertThat(waterTank.getCurrentAmount()).isEqualTo(100);
+		assertThat(milkTank.getCurrentAmount()).isEqualTo(50);
+		assertThat(coffeeTank.getCurrentAmount()).isEqualTo(130);
 
 		verify(coffeeMachine, times(1)).makeCoffee(CAPPUCCINO);
 		verifyNoMoreInteractions(coffeeMachine);
@@ -66,6 +77,11 @@ public class CoffeeMachineIntegrationTests {
 				.andExpect(jsonPath("$.coffeeEssence.amount").value(50))
 				.andExpect(jsonPath("$.coffeeEssence.coffeeExtract").value(40))
 				.andExpect(jsonPath("$.milk").doesNotExist());
+
+		assertThat(wastesTank.getCurrentAmount()).isEqualTo(40);
+		assertThat(waterTank.getCurrentAmount()).isEqualTo(200);
+		assertThat(milkTank.getCurrentAmount()).isEqualTo(200);
+		assertThat(coffeeTank.getCurrentAmount()).isEqualTo(110);
 
 		verify(coffeeMachine, times(1)).makeCoffee(ESPRESSO);
 		verifyNoMoreInteractions(coffeeMachine);
@@ -89,6 +105,11 @@ public class CoffeeMachineIntegrationTests {
 				.hasMessageContaining("Insufficient water amount. Only 0ml left. Refill " +
 						"the water tank");
 
+		assertThat(wastesTank.getCurrentAmount()).isEqualTo(40);
+		assertThat(waterTank.getCurrentAmount()).isEqualTo(0);
+		assertThat(milkTank.getCurrentAmount()).isEqualTo(200);
+		assertThat(coffeeTank.getCurrentAmount()).isEqualTo(110);
+
 		verify(coffeeMachine, times(1)).makeCoffee(AMERICANO);
 		verify(coffeeMachine, times(1)).makeCoffee(LATTE);
 		verifyNoMoreInteractions(coffeeMachine);
@@ -99,6 +120,11 @@ public class CoffeeMachineIntegrationTests {
 		this.mockMvc.perform(get("/coffee")
 				.param("coffeeKind", "Unknown"))
 				.andExpect(status().isBadRequest());
+
+		assertThat(wastesTank.getCurrentAmount()).isEqualTo(0);
+		assertThat(waterTank.getCurrentAmount()).isEqualTo(250);
+		assertThat(milkTank.getCurrentAmount()).isEqualTo(200);
+		assertThat(coffeeTank.getCurrentAmount()).isEqualTo(150);
 
 		verifyNoInteractions(coffeeMachine);
 	}

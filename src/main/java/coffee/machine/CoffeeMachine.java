@@ -1,7 +1,9 @@
 package coffee.machine;
 
 import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Milk;
+import coffee.machine.ingredients.Water;
 import coffee.machine.modules.CoffeeModule;
 import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
@@ -28,15 +30,19 @@ public class CoffeeMachine {
 
         Coffee coffee = Coffee.create();
 
-        coffeeModule.ground(coffeeKind.getCoffeeNeeded());
+        CoffeeGrain groundedCoffee = coffeeModule.ground(coffeeKind.getCoffeeNeeded());
 
-        CoffeeEssence essence = waterModule.prepareTheEssence(coffeeKind.getWaterNeeded());
-        coffee.setCoffeeEssence(essence);
+        Water steam = waterModule.prepareSteam(coffeeKind.getWaterNeeded());
+
+        CoffeeEssence coffeeEssence = coffeeModule.pushSteamThroughGroundedCoffee(steam, groundedCoffee);
+
+        coffee.setCoffeeEssence(coffeeEssence);
 
         if (coffeeKind.getMilkNeeded() > 0) {
             Milk milk = milkModule.prepareMilk(coffeeKind.getMilkNeeded(), coffeeKind.isWithFoam());
             coffee.setMilk(milk);
         }
+
         return coffee;
     }
 
