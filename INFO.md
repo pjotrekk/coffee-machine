@@ -42,7 +42,7 @@ In Intellij:
 Install lombok plugin
 Run CoffeeMachineApplication
 
-Use GET requests on http://localhost:8086/coffee with param coffeeKind where
+Use GET requests on http://localhost:8080/coffee with param coffeeKind where
 CoffeeKind = { "Americano", "Espresso", "Latte", "Cappuccino" } - the capitalization doesn't matter.
 
 The return value is in the form:
@@ -54,4 +54,8 @@ The return value is in the form:
   withFoam: <boolean>
 }
 ```
+At the start of the application all the tanks are empty. They can be refilled by
+sending a PUT request on /tanks/{tank} with amount param, tank = {water, milk, 
+coffee}.
 
+To empty wastes bin send PUT request on /tanks/wastes with no params.
