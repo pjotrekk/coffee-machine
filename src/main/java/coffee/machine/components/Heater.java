@@ -3,7 +3,7 @@ package coffee.machine.components;
 import coffee.machine.ingredients.Milk;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(staticName = "create")
+@RequiredArgsConstructor(staticName = "of")
 public class Heater {
 
     private final int temperature;
