@@ -1,6 +1,6 @@
 package coffee.machine.components;
 
-import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.coffee.CoffeeEssence;
 import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Water;
 import lombok.RequiredArgsConstructor;

@@ -3,7 +3,7 @@ package coffee.machine.modules;
 import coffee.machine.components.CoffeePot;
 import coffee.machine.components.Grounder;
 import coffee.machine.components.Tank;
-import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.coffee.CoffeeEssence;
 import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Water;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,8 @@
 package coffee.machine;
 
-import coffee.machine.ingredients.CoffeeEssence;
+import coffee.machine.coffee.Coffee;
+import coffee.machine.coffee.CoffeeEssence;
+import coffee.machine.coffee.CoffeeKind;
 import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Milk;
 import coffee.machine.ingredients.Water;

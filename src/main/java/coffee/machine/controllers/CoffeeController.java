@@ -1,7 +1,7 @@
 package coffee.machine.controllers;
 
-import coffee.machine.Coffee;
-import coffee.machine.CoffeeKind;
+import coffee.machine.coffee.Coffee;
+import coffee.machine.coffee.CoffeeKind;
 import coffee.machine.CoffeeMachine;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;

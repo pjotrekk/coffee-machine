@@ -1,4 +1,4 @@
-package coffee.machine.ingredients;
+package coffee.machine.coffee;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

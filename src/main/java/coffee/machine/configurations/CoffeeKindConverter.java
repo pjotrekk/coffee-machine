@@ -1,6 +1,6 @@
 package coffee.machine.configurations;
 
-import coffee.machine.CoffeeKind;
+import coffee.machine.coffee.CoffeeKind;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

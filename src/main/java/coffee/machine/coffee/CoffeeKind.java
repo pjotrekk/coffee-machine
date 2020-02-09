@@ -1,4 +1,4 @@
-package coffee.machine;
+package coffee.machine.coffee;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
