@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor
+@NoArgsConstructor(staticName = "create")
 public class Evaporator {
 
     public Water evaporate(Water water) {
