@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TankTest {
 
-    Water water = Water.of(200, 23, false);
+    Water testWater = Water.of(200, 23, false);
     Tank<Water> tank;
 
     @BeforeEach
     void setUp() {
-        tank = new Tank<>(water, 500);
+        tank = new Tank<>(Water.of(200, 23, false), 500);
     }
 
     @Test
@@ -33,13 +33,12 @@ class TankTest {
 
     @Test
     void shouldSplitItsIngredient() {
-        Water splitted = tank.acquire(100);
+        Water acquired = tank.acquire(100);
 
-        assertEquals(100, splitted.getAmount());
-        assertFalse(splitted.isEvaporated());
-        assertEquals(water.getTemperature(), splitted.getTemperature());
-
-        assertEquals(100, water.getAmount());
+        assertEquals(100, acquired.getAmount());
+        assertFalse(acquired.isEvaporated());
+        assertEquals(testWater.getTemperature(), acquired.getTemperature());
+        assertEquals(100, tank.getCurrentAmount());
     }
 
     @Test

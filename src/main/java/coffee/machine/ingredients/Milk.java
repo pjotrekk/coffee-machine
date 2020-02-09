@@ -3,7 +3,7 @@ package coffee.machine.ingredients;
 import lombok.Getter;
 
 @Getter
-public class Milk extends Ingredient<Milk> {
+public final class Milk extends Ingredient<Milk> {
 
     public static final int PERFECT_TEMPERATURE = 65;
 

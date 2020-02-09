@@ -3,7 +3,7 @@ package coffee.machine.ingredients;
 import lombok.Getter;
 
 @Getter
-public class CoffeeGrain extends Ingredient<CoffeeGrain> {
+public final class CoffeeGrain extends Ingredient<CoffeeGrain> {
 
     private boolean grounded = false;
 
@@ -18,7 +18,6 @@ public class CoffeeGrain extends Ingredient<CoffeeGrain> {
     public CoffeeGrain newInstance(int amount) {
         return CoffeeGrain.of(amount, grounded, used);
     }
-
 
     public static CoffeeGrain create() {
         return new CoffeeGrain();

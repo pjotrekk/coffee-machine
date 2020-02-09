@@ -33,7 +33,8 @@ public class Tank<T extends Ingredient<T>> {
     public T acquire(int amount) {
         checkEnoughIngredient(amount);
         checkAmountBelowZero(amount);
-        return ingredient.split(amount);
+        ingredient = ingredient.setAmount(ingredient.getAmount() - amount);
+        return ingredient.newInstance(amount);
     }
 
     private void checkEnoughIngredient(int amount) {

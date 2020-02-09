@@ -3,7 +3,9 @@ package coffee.machine.ingredients;
 import lombok.Getter;
 
 @Getter
-public class Water extends Ingredient<Water> {
+public final class Water extends Ingredient<Water> {
+
+    public final static int BOIL_TEMPERATURE = 100;
 
     private int temperature = ROOM_TEMPERATURE;
 
@@ -19,8 +21,7 @@ public class Water extends Ingredient<Water> {
         return Water.of(amount, temperature, evaporated);
     }
 
-    public Water() {
-    }
+    public Water() {}
 
     private Water(int amount) {
         super(amount);
