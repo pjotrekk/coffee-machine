@@ -39,7 +39,9 @@ It can only check whether it is full.
 
 # How to run
 In Intellij:
+
 Install lombok plugin
+
 Run CoffeeMachineApplication
 
 Use GET requests on http://localhost:8080/coffee with param coffeeKind where
