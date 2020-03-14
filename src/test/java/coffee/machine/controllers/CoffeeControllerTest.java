@@ -1,8 +1,9 @@
 package coffee.machine.controllers;
 
+import coffee.machine.CoffeeMachine;
 import coffee.machine.coffee.Coffee;
 import coffee.machine.coffee.CoffeeKind;
-import coffee.machine.CoffeeMachine;
+import coffee.machine.coffee.ImmutableCoffee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,12 @@ public class CoffeeControllerTest {
     @MockBean
     private CoffeeMachine coffeeMachine;
 
-    Coffee testCoffee = Coffee.of(10, 10, 10, true);
+    private Coffee testCoffee = ImmutableCoffee.builder()
+            .water(10)
+            .coffeeExtract(10)
+            .milk(10)
+            .withFoam(true)
+            .build();
 
     @BeforeEach
     void setUp() {

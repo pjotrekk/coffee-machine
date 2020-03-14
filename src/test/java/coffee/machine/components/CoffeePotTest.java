@@ -24,7 +24,7 @@ class CoffeePotTest {
     @Test
     void shouldCreateCoffeeEssenceAndRemoveUsedCoffeeToWastesTank() {
         Water steam = Water.of(100, 100, true);
-        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true, false);
+        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true);
 
         CoffeeEssence essence = coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee);
 
@@ -36,7 +36,7 @@ class CoffeePotTest {
     @Test
     void shouldFailOnWaterNotEvaporated() {
         Water steam = Water.of(100, 100, false);
-        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true, false);
+        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true);
 
         AssertionError error = assertThrows(AssertionError.class, () ->
                 coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee));
@@ -47,7 +47,7 @@ class CoffeePotTest {
     @Test
     void shouldFailOnCoffeeGrainNotGrounded() {
         Water steam = Water.of(100, 100, true);
-        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, false, false);
+        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, false);
 
         AssertionError error = assertThrows(AssertionError.class, () ->
                 coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee));
@@ -55,14 +55,4 @@ class CoffeePotTest {
         assertThat(error).isNotNull().hasMessageContaining("Coffee in coffee pot is not grounded");
     }
 
-    @Test
-    void shouldFailOnCoffeeGrainUsed() {
-        Water steam = Water.of(100, 100, true);
-        CoffeeGrain groundedCoffee = CoffeeGrain.of(50, true, true);
-
-        AssertionError error = assertThrows(AssertionError.class, () ->
-                coffeePot.combineSteamAndGroundedCoffee(steam, groundedCoffee));
-
-        assertThat(error).isNotNull().hasMessageContaining("Coffee in coffee pot has already been used");
-    }
 }

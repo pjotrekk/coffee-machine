@@ -10,7 +10,7 @@ public class Grounder {
 
     public CoffeeGrain ground(CoffeeGrain coffeeGrain) {
         checkCoffeeGrainGrounded(coffeeGrain);
-        return CoffeeGrain.of(coffeeGrain.getAmount(), true, coffeeGrain.isUsed());
+        return CoffeeGrain.of(coffeeGrain.getAmount(), true);
     }
 
     private void checkCoffeeGrainGrounded(CoffeeGrain coffeeGrain) {

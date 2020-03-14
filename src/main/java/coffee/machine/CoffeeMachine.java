@@ -3,6 +3,7 @@ package coffee.machine;
 import coffee.machine.coffee.Coffee;
 import coffee.machine.coffee.CoffeeEssence;
 import coffee.machine.coffee.CoffeeKind;
+import coffee.machine.coffee.ImmutableCoffee;
 import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Milk;
 import coffee.machine.ingredients.Water;
@@ -10,13 +11,15 @@ import coffee.machine.modules.CoffeeModule;
 import coffee.machine.modules.MilkModule;
 import coffee.machine.modules.WastesModule;
 import coffee.machine.modules.WaterModule;
-import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.concurrent.*;
 
 @Component
-@AllArgsConstructor(staticName = "of")
-@Log4j2
+@RequiredArgsConstructor(staticName = "of")
 public class CoffeeMachine {
 
     private final WaterModule waterModule;
@@ -27,27 +30,43 @@ public class CoffeeMachine {
 
     private final MilkModule milkModule;
 
+    private final ExecutorService executorService;
+
     public Coffee makeCoffee(CoffeeKind coffeeKind) {
         checkContainers(coffeeKind);
 
-        Coffee coffee = Coffee.create();
+        Future<Water> steam = getWaterFuture(coffeeKind);
+        Future<CoffeeGrain> groundedCoffee = getCoffeeGrainFuture(coffeeKind);
+        Future<Milk> hotMilk = getMilkFuture(coffeeKind);
 
-        CoffeeGrain groundedCoffee = coffeeModule.ground(coffeeKind.getCoffeeNeeded());
+        ImmutableCoffee.Builder coffeeBuilder = ImmutableCoffee.builder();
+        try {
+            CoffeeEssence coffeeEssence = coffeeModule.pushSteamThroughGroundedCoffee(steam.get(), groundedCoffee.get());
 
-        Water steam = waterModule.prepareSteam(coffeeKind.getWaterNeeded());
-
-        CoffeeEssence coffeeEssence = coffeeModule.pushSteamThroughGroundedCoffee(steam, groundedCoffee);
-
-        coffee.setWater(coffeeEssence.getAmount());
-        coffee.setCoffeeExtract(coffeeEssence.getCoffeeExtract());
-
-        if (coffeeKind.getMilkNeeded() > 0) {
-            Milk milk = milkModule.prepareMilk(coffeeKind.getMilkNeeded(), coffeeKind.isWithFoam());
-            coffee.setMilk(milk.getAmount());
-            coffee.setWithFoam(milk.isFoamed());
+            coffeeBuilder.coffeeExtract(coffeeEssence.getCoffeeExtract())
+                    .water(coffeeEssence.getAmount())
+                    .milk(hotMilk.get().getAmount())
+                    .withFoam(hotMilk.get().isFoamed());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Machine timeouted. Try again.");
         }
 
-        return coffee;
+        return coffeeBuilder.build();
+    }
+
+    private Future<Milk> getMilkFuture(CoffeeKind coffeeKind) {
+        if (coffeeKind.getMilkNeeded() > 0) {
+            return executorService.submit(() -> milkModule.prepareMilk(coffeeKind.getMilkNeeded(), coffeeKind.isWithFoam()));
+        }
+        return CompletableFuture.completedFuture(Milk.of(0, 0, false));
+    }
+
+    private Future<CoffeeGrain> getCoffeeGrainFuture(CoffeeKind coffeeKind) {
+        return executorService.submit(() -> coffeeModule.ground(coffeeKind.getCoffeeNeeded()));
+    }
+
+    private Future<Water> getWaterFuture(CoffeeKind coffeeKind) {
+        return executorService.submit(() -> waterModule.prepareSteam(coffeeKind.getWaterNeeded()));
     }
 
     private void checkContainers(CoffeeKind coffeeKind) {

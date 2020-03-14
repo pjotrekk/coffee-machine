@@ -86,7 +86,7 @@ class CoffeeModuleTest {
     @Test
     void shouldCallGrounder() {
         int amountAcquired = 20;
-        CoffeeGrain coffeeGrain = CoffeeGrain.of(amountAcquired, false, false);
+        CoffeeGrain coffeeGrain = CoffeeGrain.of(amountAcquired, false);
 
         given(coffeeTank.acquire(anyInt())).willReturn(coffeeGrain);
         given(grounder.ground(any())).willReturn(coffeeGrain);

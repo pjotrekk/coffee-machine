@@ -1,6 +1,7 @@
 package coffee.machine.components;
 
 import coffee.machine.coffee.CoffeeEssence;
+import coffee.machine.coffee.ImmutableCoffeeEssence;
 import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Water;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,8 @@ public class CoffeePot {
     public CoffeeEssence combineSteamAndGroundedCoffee(Water steam, CoffeeGrain groundedCoffee) {
         checkWaterEvaporated(steam);
         checkCoffeeGrounded(groundedCoffee);
-        checkCoffeeNotUsed(groundedCoffee);
 
-        CoffeeEssence coffeeEssence = CoffeeEssence.of(steam.getAmount(), groundedCoffee.getAmount());
+        CoffeeEssence coffeeEssence = ImmutableCoffeeEssence.of(steam.getAmount(), groundedCoffee.getAmount());
         wastesTank.addAmount(groundedCoffee.getAmount());
         return coffeeEssence;
     }
@@ -25,12 +25,6 @@ public class CoffeePot {
     private void checkCoffeeGrounded(CoffeeGrain groundedCoffee) {
         if (!groundedCoffee.isGrounded()) {
             throw new AssertionError("Coffee in coffee pot is not grounded");
-        }
-    }
-
-    private void checkCoffeeNotUsed(CoffeeGrain groundedCoffee) {
-        if (groundedCoffee.isUsed()) {
-            throw new AssertionError("Coffee in coffee pot has already been used");
         }
     }
 

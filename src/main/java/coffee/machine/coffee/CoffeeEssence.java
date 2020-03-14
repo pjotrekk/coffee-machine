@@ -1,13 +1,10 @@
 package coffee.machine.coffee;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import org.immutables.value.Value;
 
-@AllArgsConstructor(staticName = "of")
-@Getter
-@EqualsAndHashCode
-public class CoffeeEssence {
-    private int amount;
-    private int coffeeExtract;
+@Value.Style(allParameters = true)
+@Value.Immutable
+public interface CoffeeEssence {
+    int getAmount();
+    int getCoffeeExtract();
 }

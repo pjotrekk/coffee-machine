@@ -7,8 +7,6 @@ public final class CoffeeGrain extends Ingredient<CoffeeGrain> {
 
     private boolean grounded = false;
 
-    private boolean used = false;
-
     @Override
     protected CoffeeGrain self() {
         return this;
@@ -16,7 +14,7 @@ public final class CoffeeGrain extends Ingredient<CoffeeGrain> {
 
     @Override
     public CoffeeGrain newInstance(int amount) {
-        return CoffeeGrain.of(amount, grounded, used);
+        return CoffeeGrain.of(amount, grounded);
     }
 
     public static CoffeeGrain create() {
@@ -27,8 +25,8 @@ public final class CoffeeGrain extends Ingredient<CoffeeGrain> {
         return new CoffeeGrain(amount);
     }
 
-    public static CoffeeGrain of(int amount, boolean grounded, boolean used) {
-        return new CoffeeGrain(amount, grounded, used);
+    public static CoffeeGrain of(int amount, boolean grounded) {
+        return new CoffeeGrain(amount, grounded);
     }
 
     private CoffeeGrain() {}
@@ -37,10 +35,9 @@ public final class CoffeeGrain extends Ingredient<CoffeeGrain> {
         super(amount);
     }
 
-    private CoffeeGrain(int amount, boolean grounded, boolean used) {
+    private CoffeeGrain(int amount, boolean grounded) {
         super(amount);
         this.grounded = grounded;
-        this.used = used;
     }
 
 }

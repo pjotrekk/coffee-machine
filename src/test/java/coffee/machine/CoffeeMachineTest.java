@@ -1,8 +1,6 @@
 package coffee.machine;
 
-import coffee.machine.coffee.Coffee;
-import coffee.machine.coffee.CoffeeEssence;
-import coffee.machine.coffee.CoffeeKind;
+import coffee.machine.coffee.*;
 import coffee.machine.ingredients.CoffeeGrain;
 import coffee.machine.ingredients.Milk;
 import coffee.machine.ingredients.Water;
@@ -13,9 +11,11 @@ import coffee.machine.modules.WaterModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -36,16 +36,19 @@ class CoffeeMachineTest {
     @Mock
     private MilkModule milkModule;
 
-    @InjectMocks
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+
     private CoffeeMachine coffeeMachine;
 
     private Water testWater = Water.of(200, 23, false);
     private Milk testMilk = Milk.of(100, 23, false);
-    private CoffeeGrain testCoffeeGrain = CoffeeGrain.of(20, false, false);
-    private CoffeeEssence testCoffeeEssence = CoffeeEssence.of(200, 20);
+    private CoffeeGrain testCoffeeGrain = CoffeeGrain.of(20, false);
+    private CoffeeEssence testCoffeeEssence = ImmutableCoffeeEssence.of(200, 20);
 
     @BeforeEach
     void setUp() {
+        coffeeMachine = CoffeeMachine.of(waterModule, coffeeModule, wastesModule, milkModule, executorService);
+
         given(waterModule.prepareSteam(anyInt())).willReturn(testWater);
         given(coffeeModule.ground(anyInt())).willReturn(testCoffeeGrain);
         given(coffeeModule.pushSteamThroughGroundedCoffee(any(), any())).willReturn(testCoffeeEssence);
@@ -57,7 +60,12 @@ class CoffeeMachineTest {
         int coffeeNeeded = CoffeeKind.AMERICANO.getCoffeeNeeded();
         int milkNeeded = CoffeeKind.AMERICANO.getMilkNeeded();
 
-        Coffee expected = Coffee.of(testCoffeeEssence.getAmount(), testCoffeeEssence.getCoffeeExtract(), 0, false);
+        Coffee expected = ImmutableCoffee.builder()
+                .water(testCoffeeEssence.getAmount())
+                .coffeeExtract(testCoffeeEssence.getCoffeeExtract())
+                .milk(0)
+                .withFoam(false)
+                .build();
 
         Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.AMERICANO);
 
@@ -81,8 +89,12 @@ class CoffeeMachineTest {
 
         given(milkModule.prepareMilk(anyInt(), anyBoolean())).willReturn(testMilk);
 
-        Coffee expected = Coffee.of(testCoffeeEssence.getAmount(), testCoffeeEssence.getCoffeeExtract(),
-                testMilk.getAmount(), testMilk.isFoamed());
+        Coffee expected = ImmutableCoffee.builder()
+                .water(testCoffeeEssence.getAmount())
+                .coffeeExtract(testCoffeeEssence.getCoffeeExtract())
+                .milk(testMilk.getAmount())
+                .withFoam(testMilk.isFoamed())
+                .build();
 
         Coffee coffee = coffeeMachine.makeCoffee(CoffeeKind.LATTE);
 
